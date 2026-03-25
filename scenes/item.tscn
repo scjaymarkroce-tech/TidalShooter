@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://be6g0ke07nvk"]
+
+[ext_resource type="Texture2D" uid="uid://bb0c087hybs6g" path="res://assets/items/coffee_box.png" id="1_4gq7n"]
+[ext_resource type="Script" uid="uid://cfikcvyjjknc2" path="res://scripts/item.gd" id="1_s8enn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8enn"]
+size = Vector2(36, 36)
+
+[node name="Item" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_s8enn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4gq7n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s8enn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

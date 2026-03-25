@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://cbg6ftndwf05a"]
+
+[ext_resource type="Script" uid="uid://rmj5eeqoqrat" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://b0nxpo1wjd4fb" path="res://scenes/world.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://b2qwnmoo8mi2b" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://6k38wdrw42v4" path="res://scenes/enemy_spawner.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://deeo0kaeyfkm7" path="res://scripts/bullet_manager.gd" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bbubfjdfhdrxe" path="res://scenes/bullet.tscn" id="5_tefeu"]
+[ext_resource type="PackedScene" uid="uid://rv3yckew4h5o" path="res://scenes/hud.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://81yslult5viv" path="res://scenes/game_over.tscn" id="8_tipki"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jyhfs")
+
+[node name="World" parent="." instance=ExtResource("1_o5qli")]
+
+[node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+
+[node name="BulletManager" type="Node2D" parent="."]
+script = ExtResource("4_tbgi4")
+bullet_scene = ExtResource("5_tefeu")
+
+[node name="EnemySpawner" parent="." instance=ExtResource("3_sugp2")]
+
+[node name="WaveOverTimer" type="Timer" parent="."]
+process_mode = 2
+one_shot = true
+
+[node name="RestartTimer" type="Timer" parent="."]
+process_mode = 2
+one_shot = true
+
+[node name="Hud" parent="." instance=ExtResource("7_o6xl0")]
+offset = Vector2(0, 768)
+transform = Transform2D(1, 0, 0, 1, 0, 768)
+
+[node name="GameOver" parent="." instance=ExtResource("8_tipki")]
+process_mode = 2
+
+[connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
+[connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
+[connection signal="timeout" from="WaveOverTimer" to="." method="_on_wave_over_timer_timeout"]
+[connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
