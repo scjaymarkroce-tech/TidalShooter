@@ -1,3 +1,29 @@
-# Godot 4+ specific ignores
+# Godot
 .godot/
-/android/
+*.exe
+*.elf
+*.so
+*.dylib
+
+# Builds
+export/
+builds/
+dist/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# User-specific
+user:://
