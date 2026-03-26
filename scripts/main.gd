@@ -29,7 +29,6 @@ func _process(_delta):
 		if $EnemySpawner/Timer.wait_time > 0.25:
 			$EnemySpawner/Timer.wait_time -= 0.05
 		difficulty += DIFF_MULTIPLIER
-		get_tree().paused = true
 		
 		# Show upgrade menu every 3 waves
 		if wave % 3 == 0:

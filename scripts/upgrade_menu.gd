@@ -20,23 +20,43 @@ func _ready() -> void:
 	# Hide menu initially
 	hide()
 	
-	# CORRECT - pass the actual index
-	button1.pressed.connect(_on_upgrade_selected.bind(0))
-	button2.pressed.connect(_on_upgrade_selected.bind(1))
-	button3.pressed.connect(_on_upgrade_selected.bind(2))
+	# Wait for buttons to be ready, then connect
+	await get_tree().process_frame
+	
+	# Connect buttons with proper error checking
+	if button1:
+		button1.pressed.connect(_on_upgrade_selected.bind(0))
+	else:
+		print("ERROR: Button1 not found!")
+		
+	if button2:
+		button2.pressed.connect(_on_upgrade_selected.bind(1))
+	else:
+		print("ERROR: Button2 not found!")
+		
+	if button3:
+		button3.pressed.connect(_on_upgrade_selected.bind(2))
+	else:
+		print("ERROR: Button3 not found!")
 	
 	
 # Show upgrade menu with 3 options
 func show_upgrade_menu() -> void:
-	get_tree().paused = true
+	# DON'T pause the entire tree - just disable player input
+	get_tree().paused = false  # ✅ Don't pause
+	
+	# Disable player input instead
+	get_parent().get_node("Player").process_mode = Node.PROCESS_MODE_DISABLED
 	
 	# Get upgrade options
 	upgrade_options = upgrade_manager.get_upgrade_options()
 	
-	# Display buttons with descriptions
+	# Display buttons
 	display_upgrade_options()
 	
+	# Show the menu (should be on top)
 	show()
+	# REMOVE: move_child(self, get_parent().get_child_count() - 1)
 
 # Display the upgrade options on screen
 func display_upgrade_options() -> void:
@@ -58,17 +78,18 @@ func display_upgrade_options() -> void:
 				button3.text = option_names[option]
 				
 				
-# Handle upgrade selection
 func _on_upgrade_selected(index: int) -> void:
 	if index < upgrade_options.size():
 		var selected = upgrade_options[index]
 		upgrade_manager.apply_upgrade(selected, player)
 		
-		# Close menu and resume game
-		hide()
-		get_tree().paused = false
+		# Re-enable player
+		player.process_mode = Node.PROCESS_MODE_INHERIT
 		
-		# Signal main to continue
+		# Close menu
+		hide()
+		
+		# Continue game
 		main.on_upgrade_complete()
 
 # Get current upgrade levels for display
