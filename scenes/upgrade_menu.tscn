@@ -99,7 +99,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ppglw")
 
-[node name="ShotgunUpgrade" type="Button" parent="."]
+[node name="Button1" type="Button" parent="."]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 611.0
@@ -112,7 +112,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_0e30j")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jkuc8")
 text = "Shotgun Upgrade"
 
-[node name="RifleUpgrade" type="Button" parent="."]
+[node name="Button2" type="Button" parent="."]
 layout_mode = 0
 offset_left = 517.0
 offset_top = 611.0
@@ -125,7 +125,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_0e30j")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jkuc8")
 text = "RIFLE UPGRADE"
 
-[node name="SpecialUpgrade" type="Button" parent="."]
+[node name="Button3" type="Button" parent="."]
 layout_mode = 0
 offset_left = 957.0
 offset_top = 611.0
@@ -176,5 +176,3 @@ offset_bottom = -277.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
-
-[connection signal="pressed" from="ShotgunUpgrade" to="." method="_on_shotgun_upgrade_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbg6ftndwf05a"]
+[gd_scene load_steps=10 format=3 uid="uid://cbg6ftndwf05a"]
 
 [ext_resource type="Script" uid="uid://rmj5eeqoqrat" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b0nxpo1wjd4fb" path="res://scenes/world.tscn" id="1_o5qli"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bbubfjdfhdrxe" path="res://scenes/bullet.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://rv3yckew4h5o" path="res://scenes/hud.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://81yslult5viv" path="res://scenes/game_over.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://uc45x8ukmjq2" path="res://scenes/upgrade_menu.tscn" id="9_85g3d"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_jyhfs")
@@ -37,6 +38,8 @@ transform = Transform2D(1, 0, 0, 1, 0, 768)
 
 [node name="GameOver" parent="." instance=ExtResource("8_tipki")]
 process_mode = 2
+
+[node name="UpgradeMenu" parent="." instance=ExtResource("9_85g3d")]
 
 [connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
