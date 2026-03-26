@@ -1,0 +1,180 @@
+[gd_scene load_steps=8 format=3 uid="uid://uc45x8ukmjq2"]
+
+[ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="1_e3qxy"]
+[ext_resource type="Script" uid="uid://g5aiqaoenk8x" path="res://scripts/upgrade_menu.gd" id="1_ksfom"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppglw"]
+bg_color = Color(0.393485, 0.672578, 0.134316, 0.388235)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksfom"]
+bg_color = Color(0.174454, 0.563679, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.839216, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0e30j"]
+bg_color = Color(0.129233, 0.441751, 9.62615e-08, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.781951, 0.781912, 0.154097, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkuc8"]
+bg_color = Color(0.229995, 0.713437, 7.70092e-07, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.781951, 0.781912, 0.154097, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3qxy"]
+bg_color = Color(0.780392, 0.780392, 0.152941, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.231373, 0.713726, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0.249015, 0.280812, 4.81308e-08, 0.6)
+shadow_size = 5
+shadow_offset = Vector2(5, 5)
+
+[node name="UpgradeMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ksfom")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ppglw")
+
+[node name="ShotgunUpgrade" type="Button" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 611.0
+offset_right = 406.0
+offset_bottom = 671.0
+theme_override_fonts/font = ExtResource("1_e3qxy")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0e30j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jkuc8")
+text = "Shotgun Upgrade"
+
+[node name="RifleUpgrade" type="Button" parent="."]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 611.0
+offset_right = 854.0
+offset_bottom = 671.0
+theme_override_fonts/font = ExtResource("1_e3qxy")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0e30j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jkuc8")
+text = "RIFLE UPGRADE"
+
+[node name="SpecialUpgrade" type="Button" parent="."]
+layout_mode = 0
+offset_left = 957.0
+offset_top = 611.0
+offset_right = 1294.0
+offset_bottom = 671.0
+theme_override_fonts/font = ExtResource("1_e3qxy")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0e30j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jkuc8")
+text = "SPECIAL GUN"
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 68.0
+offset_top = 76.0
+offset_right = -984.0
+offset_bottom = -277.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[node name="Panel3" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 516.0
+offset_top = 76.0
+offset_right = -536.0
+offset_bottom = -277.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[node name="Panel4" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 956.0
+offset_top = 76.0
+offset_right = -96.0
+offset_bottom = -277.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[connection signal="pressed" from="ShotgunUpgrade" to="." method="_on_shotgun_upgrade_pressed"]

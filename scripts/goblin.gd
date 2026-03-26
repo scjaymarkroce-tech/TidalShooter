@@ -13,6 +13,8 @@ var speed : int = 100
 var direction : Vector2
 var alive : bool
 
+var health : int = 20
+
 const DROP_CHANCE : float = 0.3
 
 func _ready() -> void:
@@ -55,13 +57,21 @@ func die():
 	alive = false
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.animation = "dead"
-	$Area2D/CollisionShape2D.set_deferred("disabled", true)
+	# Disable hitbox (Area2D)
+	$Area2D.set_deferred("monitoring", false)
+
+	# Disable body collision (VERY IMPORTANT)
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
 	if randf() <= DROP_CHANCE:
 		drop_item()
 	var explosion = explosion_scene.instantiate()
 	explosion.position = position
 	main.add_child(explosion)
 	explosion.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	velocity = Vector2.ZERO
+	set_physics_process(false)
 	
 func drop_item():
 	var item = item_scene.instantiate()
@@ -76,3 +86,12 @@ func _on_entrance_timer_timeout() -> void:
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	hit_player.emit()
+
+func take_damage(amount):
+	if not alive:
+		return
+		
+	health -= amount
+	
+	if health <= 0:
+		die()

@@ -6,40 +6,40 @@
 script = ExtResource("1_ks1gq")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(576, -50)
+position = Vector2(656, -34)
 
 [node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(621, -50)
+position = Vector2(701, -34)
 
 [node name="Marker2D3" type="Marker2D" parent="."]
-position = Vector2(666, -50)
+position = Vector2(746, -34)
 
 [node name="Marker2D4" type="Marker2D" parent="."]
-position = Vector2(-50, 350)
+position = Vector2(-42, 350)
 
 [node name="Marker2D5" type="Marker2D" parent="."]
-position = Vector2(-50, 395)
+position = Vector2(-42, 395)
 
 [node name="Marker2D6" type="Marker2D" parent="."]
-position = Vector2(-50, 440)
+position = Vector2(-42, 440)
 
 [node name="Marker2D7" type="Marker2D" parent="."]
-position = Vector2(579, 775)
+position = Vector2(651, 788)
 
 [node name="Marker2D8" type="Marker2D" parent="."]
-position = Vector2(624, 775)
+position = Vector2(696, 788)
 
 [node name="Marker2D9" type="Marker2D" parent="."]
-position = Vector2(669, 775)
+position = Vector2(741, 788)
 
 [node name="Marker2D10" type="Marker2D" parent="."]
-position = Vector2(1292, 350)
+position = Vector2(1428, 350)
 
 [node name="Marker2D11" type="Marker2D" parent="."]
-position = Vector2(1291, 395)
+position = Vector2(1427, 395)
 
 [node name="Marker2D12" type="Marker2D" parent="."]
-position = Vector2(1291, 440)
+position = Vector2(1427, 440)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

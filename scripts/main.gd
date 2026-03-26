@@ -18,10 +18,14 @@ func new_game():
 	$EnemySpawner/Timer.wait_time = 1.0
 	reset()
 
-func _process(delta):
+func _process(_delta):
 	if is_wave_completed():
 		wave += 1
 		
+		# REMOVE flamethrower AFTER wave ends
+		if wave > 1:
+			$Player.has_flamethrower = false
+	
 #		adjust difficulty
 		if $EnemySpawner/Timer.wait_time > 0.25:
 			$EnemySpawner/Timer.wait_time -= 0.05
@@ -34,6 +38,7 @@ func _process(delta):
 
 func reset():
 	max_enemies = int(difficulty)
+	$Player.has_flamethrower = true
 	$Player.reset()
 	get_tree().call_group("enemies", "queue_free")
 	get_tree().call_group("bullets", "queue_free")
@@ -63,6 +68,10 @@ func _on_restart_timer_timeout() -> void:
 	
 
 func is_wave_completed():
+	if wave > 1:
+		$Player.has_flamethrower = false
+		
+		
 	var all_dead = true
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	
