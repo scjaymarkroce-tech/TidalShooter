@@ -32,7 +32,6 @@ process_mode = 2
 one_shot = true
 
 [node name="Hud" parent="." instance=ExtResource("7_o6xl0")]
-visible = false
 offset = Vector2(0, 768)
 transform = Transform2D(1, 0, 0, 1, 0, 768)
 
