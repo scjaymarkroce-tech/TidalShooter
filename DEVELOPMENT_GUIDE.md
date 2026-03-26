@@ -187,12 +187,6 @@ Fullscreen Target
 
 ---
 
-## STRICT SCOPE
-Do NOT add features not in this document!
-
-
----
-
 ## Progress Checklist Guide
 1.	Weapon System — DONE (✔ with upgrades-ready foundation)
 - ✔ 3 weapon types implemented
@@ -214,68 +208,73 @@ Do NOT add features not in this document!
 - ✔ independent behavior from other weapons
 - ✔ controllable direction (fixed your earlier issue)
 
--⚠️ Differences from guide (intentional or needs adjustment):
-  •	damage = 2/tick ❌ (guide says 50, but intentionally nerfed for testing purposes) 
-  •	tick rate faster than spec (you improved feel ✔) 
-  •	currently given on wave 1 ❌ (temporary for testing) 
+- ⚠️ Differences from guide (intentional or needs adjustment):
+  - •	damage = 2/tick ❌ (guide says 50, but intentionally nerfed for testing purposes) 
+  - •	tick rate faster than spec (you improved feel ✔) 
+  - •	currently given on wave 1 ❌ (temporary for testing) 
 - 👉 Verdict:
-  ✔ Mechanically DONE
-  ⚠ Needs tuning + upgrade integration later
+    - ✔ Mechanically DONE
+    - ⚠ Needs tuning + upgrade integration later
 
 3.	❌ Upgrade System — NOT DONE
-Missing:
-•	shotgun level scaling 
-•	rifle level scaling 
-•	upgrade selection UI 
-•	10% flamethrower appearance logic 
-👉 This is your NEXT BIG SYSTEM
+- Missing:
+  - •	shotgun level scaling 
+  - •	rifle level scaling 
+  - •	upgrade selection UI 
+  - •	10% flamethrower appearance logic 
+  - 👉 This is your NEXT BIG SYSTEM
 
 4.	⚠️ Game Flow — PARTIALLY DONE
-✔ waves exist
-✔ wave progression works
-✔ pause between waves
-❌ missing:
-•	upgrade menu every 3 waves 
-•	return to game after upgrade 
+- ✔ waves exist
+- ✔ wave progression works
+- ✔ pause between waves
+  
+- ❌ missing:
+  -  •	upgrade menu every 3 waves 
+  -  •	return to game after upgrade 
 
 5.	⚠️ Enemy System — PARTIAL
-✔ basic enemy exists
-✔ health + death system
-✔ drop system
-✔ movement AI
-❌ missing:
-•	fast enemy 
-•	boss enemy 
-•	scaling table integration 
-•	spawn rate scaling accuracy 
+- ✔ basic enemy exists
+- ✔ health + death system
+- ✔ drop system
+- ✔ movement AI
+  
+- ❌ missing:
+  - •	fast enemy 
+  - •	boss enemy 
+  - •	scaling table integration 
+  - •	spawn rate scaling accuracy 
 
 6.	❌ Player Mechanics — NOT DONE (except basics)
-✔ movement
-✔ shooting
-❌ missing:
-•	dodge (Shift) 
-•	invulnerability frames 
-•	dash cooldown system 
-•	hit feedback / knockback 
+- ✔ movement
+- ✔ shooting
+  
+- ❌ missing:
+  - •	dodge (Shift) 
+  - •	invulnerability frames 
+  - •	dash cooldown system 
+  - •	hit feedback / knockback 
 
 7.	❌ Scoring System — NOT DONE
-Missing entirely:
-•	score tracking 
-•	combo multiplier 
-•	timer reset system 
+- Missing entirely:
+- •	score tracking 
+- •	combo multiplier 
+- •	timer reset system 
 
 8.	⚠️ Wave System — BASIC VERSION ONLY
-✔ wave increment
-✔ enemy clearing check
-❌ missing:
-•	exact scaling table implementation 
-•	boss spawn logic 
-•	max enemy cap enforcement 
+- ✔ wave increment
+- ✔ enemy clearing check
+  
+- ❌ missing:
+  - •	exact scaling table implementation 
+  - •	boss spawn logic 
+  - •	max enemy cap enforcement 
 
 9.	❌ UI / HUD — MINIMAL
-✔ wave / lives display
-❌ missing:
-•	score display 
-•	combo UI 
-•	upgrade menu 
-•	proper pause menu 
+- ✔ wave / lives display
+  
+- ❌ missing:
+  - •	score display 
+  - •	combo UI 
+  - •	upgrade menu 
+  - •	proper pause menu 
