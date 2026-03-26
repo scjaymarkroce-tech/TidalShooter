@@ -69,12 +69,12 @@ var has_flamethrower := false
 var flamethrower_active := false
 var flamethrower_duration := 7.0
 var flamethrower_cooldown := 2.0
-var flamethrower_damage := 2
+var flamethrower_damage := 5
 var flamethrower_tick_rate := 0.1  # 0.1 sec = 10 ticks/sec (feels better than 1/sec)
+var flamethrower_pending_remove := false    # True for the first wave after using it
+var flamethrower_used_this_wave := false    # Internal: true if used this wave
 
-
-
-signal shoot(pos, dir, damage, is_flame)
+signal shoot(pos, dir, damage, is_flame, weapon_type)
 
 
 
@@ -88,7 +88,7 @@ func _process(_delta: float) -> void:
 func reset():
 #	this is the player starting position, always in the middle of the screen
 	position = screen_size / 2
-	
+	flamethrower_used_this_wave = false
 	# movement reset
 	speed = START_SPEED
 	can_shoot = true
@@ -151,7 +151,7 @@ func get_input():
 			match current_weapon:
 				1:	#pistol
 					if current_ammo[1] > 0:
-						shoot.emit(position, dir, pistol_damage, false)
+						shoot.emit(position, dir, pistol_damage, false, 1)
 						current_ammo[1] -= 1
 						
 						# ✅ PUT IT HERE
@@ -169,7 +169,7 @@ func get_input():
 				
 				3:	#rifledddda
 					if current_ammo[3] > 0:
-						shoot.emit(position, dir, rifle_damage, false)
+						shoot.emit(position, dir, rifle_damage, false, 3)
 						current_ammo[3] -= 1
 						
 						# ✅ HERE
@@ -185,7 +185,7 @@ func shoot_shotgun(base_dir: Vector2):
 	for i in shotgun_pellets:
 		var spread = randf_range(-shotgun_spread, shotgun_spread)
 		var new_dir = base_dir.rotated(spread)
-		shoot.emit(position, new_dir, shotgun_damage, false)
+		shoot.emit(position, new_dir, shotgun_damage, false, 2)
 		
 func reload_weapon(weapon_id: int):
 	if is_reloading[weapon_id]:
@@ -204,7 +204,11 @@ func reload_weapon(weapon_id: int):
 func start_flamethrower():
 	if flamethrower_active:
 		return
-	
+
+	if has_flamethrower and not flamethrower_used_this_wave:
+		flamethrower_used_this_wave = true
+		flamethrower_pending_remove = true    # Will be removed at wave end
+
 	flamethrower_active = true
 	fire_flamethrower()
 	
@@ -220,7 +224,7 @@ func fire_flamethrower():
 		var base_dir = (get_global_mouse_position() - position).normalized()
 		var spread_dir = base_dir.rotated(randf_range(-0.2, 0.2))
 		
-		shoot.emit(position, spread_dir, flamethrower_damage, true)
+		shoot.emit(position, spread_dir, flamethrower_damage, true, 4)
 		
 		await get_tree().create_timer(flamethrower_tick_rate).timeout
 		time_passed += flamethrower_tick_rate

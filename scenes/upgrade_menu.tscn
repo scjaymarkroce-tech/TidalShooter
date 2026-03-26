@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://uc45x8ukmjq2"]
+[gd_scene load_steps=12 format=3 uid="uid://uc45x8ukmjq2"]
 
 [ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="1_e3qxy"]
 [ext_resource type="Script" uid="uid://g5aiqaoenk8x" path="res://scripts/upgrade_menu.gd" id="1_ksfom"]
+[ext_resource type="Texture2D" uid="uid://dh72cio8qoriu" path="res://ADDED/tgun1.png" id="3_6vqdt"]
+[ext_resource type="Texture2D" uid="uid://ba0se5j3hbd0q" path="res://ADDED/tgun3.png" id="4_ixicc"]
+[ext_resource type="Texture2D" uid="uid://bi6lc5wbjhf18" path="res://ADDED/tgun2.png" id="5_chbti"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppglw"]
 bg_color = Color(0.393485, 0.672578, 0.134316, 0.388235)
@@ -81,7 +84,11 @@ shadow_color = Color(0.249015, 0.280812, 4.81308e-08, 0.6)
 shadow_size = 5
 shadow_offset = Vector2(5, 5)
 
+[sub_resource type="Theme" id="Theme_ethjp"]
+
 [node name="UpgradeMenu" type="Control"]
+process_mode = 2
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,12 +106,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ppglw")
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -185.5
+offset_top = 40.0
+offset_right = 185.5
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_e3qxy")
+theme_override_font_sizes/font_size = 50
+text = "PLEASE CHOOSE"
+
 [node name="Button1" type="Button" parent="."]
 layout_mode = 0
-offset_left = 69.0
-offset_top = 611.0
-offset_right = 406.0
-offset_bottom = 671.0
+offset_left = 88.0
+offset_top = 640.0
+offset_right = 425.0
+offset_bottom = 700.0
+scale = Vector2(1.00062, 1.01248)
 theme_override_fonts/font = ExtResource("1_e3qxy")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
@@ -114,10 +136,10 @@ text = "Shotgun Upgrade"
 
 [node name="Button2" type="Button" parent="."]
 layout_mode = 0
-offset_left = 517.0
-offset_top = 611.0
-offset_right = 854.0
-offset_bottom = 671.0
+offset_left = 532.0
+offset_top = 638.0
+offset_right = 869.0
+offset_bottom = 698.0
 theme_override_fonts/font = ExtResource("1_e3qxy")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
@@ -127,10 +149,10 @@ text = "RIFLE UPGRADE"
 
 [node name="Button3" type="Button" parent="."]
 layout_mode = 0
-offset_left = 957.0
-offset_top = 611.0
-offset_right = 1294.0
-offset_bottom = 671.0
+offset_left = 972.0
+offset_top = 638.0
+offset_right = 1309.0
+offset_bottom = 698.0
 theme_override_fonts/font = ExtResource("1_e3qxy")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksfom")
@@ -144,35 +166,75 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 68.0
-offset_top = 76.0
+offset_top = 111.0
 offset_right = -984.0
-offset_bottom = -277.0
+offset_bottom = -148.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.09001, 0.888252)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[node name="TextureRect" type="TextureRect" parent="Panel2"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 542.0
+offset_right = 544.0
+offset_bottom = 845.0
+rotation = -1.57159
+theme = SubResource("Theme_ethjp")
+texture = ExtResource("3_6vqdt")
+expand_mode = 1
 
 [node name="Panel3" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 516.0
-offset_top = 76.0
-offset_right = -536.0
-offset_bottom = -277.0
+offset_left = 956.0
+offset_top = 111.0
+offset_right = -96.0
+offset_bottom = -148.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.09001, 0.888252)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[node name="TextureRect" type="TextureRect" parent="Panel3"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 540.0
+offset_right = 542.0
+offset_bottom = 843.0
+rotation = -1.57159
+theme = SubResource("Theme_ethjp")
+texture = ExtResource("4_ixicc")
+expand_mode = 1
 
 [node name="Panel4" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 956.0
-offset_top = 76.0
-offset_right = -96.0
-offset_bottom = -277.0
+offset_left = 516.0
+offset_top = 111.0
+offset_right = -536.0
+offset_bottom = -148.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.09001, 0.888252)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
+
+[node name="TextureRect" type="TextureRect" parent="Panel4"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 540.0
+offset_right = 542.0
+offset_bottom = 843.0
+rotation = -1.57159
+theme = SubResource("Theme_ethjp")
+texture = ExtResource("5_chbti")
+expand_mode = 1
+
+[connection signal="pressed" from="Button1" to="." method="_on_Button1_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]

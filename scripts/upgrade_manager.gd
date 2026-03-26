@@ -96,7 +96,7 @@ func get_upgrade_options() -> Array[String]:
 	options.append("rifle")
 	
 	# 10% chance for flamethrower
-	if randf() <= 0.1 and not has_flamethrower:
+	if randf() <= 0.3 and not has_flamethrower:
 		options.append("flamethrower")
 	
 	# If we only have 2 options, that's fine - return them
