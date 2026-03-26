@@ -90,14 +90,14 @@ func apply_rifle_stats(player: Node) -> void:
 
 # Get upgrade options for this wave
 func get_upgrade_options() -> Array[String]:
-	var options = ["shotgun", "rifle"]
+	var options: Array[String] = []  # ✅ Explicitly typed array
+	
+	options.append("shotgun")
+	options.append("rifle")
 	
 	# 10% chance for flamethrower
 	if randf() <= 0.1 and not has_flamethrower:
 		options.append("flamethrower")
 	
-	# If flamethrower already have, still offer gun upgrades
-	if options.size() < 2:
-		options.append("shotgun" if shotgun_level <= rifle_level else "rifle")
-	
+	# If we only have 2 options, that's fine - return them
 	return options

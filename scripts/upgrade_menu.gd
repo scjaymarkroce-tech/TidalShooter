@@ -20,11 +20,12 @@ func _ready() -> void:
 	# Hide menu initially
 	hide()
 	
-	# Connect button signals
-	button1.pressed.connect(_on_upgrade_selected.bindv(["option1"]))
-	button2.pressed.connect(_on_upgrade_selected.bindv(["option2"]))
-	button3.pressed.connect(_on_upgrade_selected.bindv(["option3"]))
-
+	# CORRECT - pass the actual index
+	button1.pressed.connect(_on_upgrade_selected.bind(0))
+	button2.pressed.connect(_on_upgrade_selected.bind(1))
+	button3.pressed.connect(_on_upgrade_selected.bind(2))
+	
+	
 # Show upgrade menu with 3 options
 func show_upgrade_menu() -> void:
 	get_tree().paused = true
@@ -39,23 +40,24 @@ func show_upgrade_menu() -> void:
 
 # Display the upgrade options on screen
 func display_upgrade_options() -> void:
-	var descriptions = {
-		"shotgun": "SHOTGUN UPGRADE\nDamage & Magazine Increase",
-		"rifle": "RIFLE UPGRADE\nDamage & Magazine Increase",
-		"flamethrower": "FLAMETHROWER\nSpecial weapon (1 wave)"
+	var option_names = {
+		"shotgun": "SHOTGUN UPGRADE",
+		"rifle": "RIFLE UPGRADE",
+		"flamethrower": "FLAMETHROWER"
 	}
 	
-	# Set button labels
+	# Set button text only (no descriptions)
 	for i in range(min(3, upgrade_options.size())):
 		var option = upgrade_options[i]
 		match i:
 			0:
-				button1.text = descriptions[option]
+				button1.text = option_names[option]
 			1:
-				button2.text = descriptions[option]
+				button2.text = option_names[option]
 			2:
-				button3.text = descriptions[option]
-
+				button3.text = option_names[option]
+				
+				
 # Handle upgrade selection
 func _on_upgrade_selected(index: int) -> void:
 	if index < upgrade_options.size():
