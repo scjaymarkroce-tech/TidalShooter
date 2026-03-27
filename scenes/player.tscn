@@ -197,7 +197,17 @@ one_shot = true
 wait_time = 4.0
 one_shot = true
 
+[node name="DodgeTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="DodgeCooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
 [connection signal="timeout" from="FastFireTimer" to="." method="_on_fast_fire_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="timeout" from="DodgeTimer" to="." method="_on_dodge_timer_timeout"]
+[connection signal="timeout" from="DodgeCooldownTimer" to="." method="_on_dodge_cooldown_timer_timeout"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1drbwmgrsfs4"
-path="res://.godot/imported/Path_Tile.png-7cc6d7b3def4d3ae4de1a4a1ae0f240f.ctex"
+uid="uid://ly45e0ovam2b"
+path="res://.godot/imported/Fences.png-9ea53eac31d13e757e43261e8c2a0e67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ADDED/Path_Tile.png"
-dest_files=["res://.godot/imported/Path_Tile.png-7cc6d7b3def4d3ae4de1a4a1ae0f240f.ctex"]
+source_file="res://ADDED/Fences.png"
+dest_files=["res://.godot/imported/Fences.png-9ea53eac31d13e757e43261e8c2a0e67.ctex"]
 
 [params]
 

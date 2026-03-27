@@ -19,16 +19,13 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 #	coffee
 	if item_type == 0:
-		print("Got a Coffee")
 		body.boost()
 #	health
 	elif item_type == 1:
 		main.lives += 1
 		lives_label.text = "X " + str(main.lives)
-		print("Got a Health")
 #	gun
 	elif item_type == 2:
-		print("Got a Gun")
 		body.quick_fire()
 		
 #	to delete after taking buff

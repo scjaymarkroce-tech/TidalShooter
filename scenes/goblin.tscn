@@ -1,25 +1,93 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7eoc5l574bbi"]
+[gd_scene load_steps=25 format=3 uid="uid://c7eoc5l574bbi"]
 
 [ext_resource type="Script" uid="uid://dq4prkq0qv76w" path="res://scripts/goblin.gd" id="1_g2t3q"]
-[ext_resource type="Texture2D" uid="uid://dgt30q1c0t68h" path="res://assets/enemies/goblin/goblin_dead_anim_f0.png" id="1_vho8j"]
 [ext_resource type="Texture2D" uid="uid://dpj0bd1ba6sm8" path="res://assets/enemies/goblin/goblin_idle_anim_f0.png" id="2_g2t3q"]
+[ext_resource type="Texture2D" uid="uid://bfrl25w8p5ne3" path="res://ADDED/cow3.png" id="2_yyaat"]
 [ext_resource type="Texture2D" uid="uid://ckt2ckgx502wv" path="res://assets/enemies/goblin/goblin_idle_anim_f1.png" id="3_osho7"]
 [ext_resource type="Texture2D" uid="uid://bkhka1bymkk4f" path="res://assets/enemies/goblin/goblin_idle_anim_f2.png" id="4_exsy4"]
 [ext_resource type="Texture2D" uid="uid://cpapq8r7i6fv3" path="res://assets/enemies/goblin/goblin_idle_anim_f3.png" id="5_nadka"]
-[ext_resource type="Texture2D" uid="uid://dneu4qysyw1cg" path="res://assets/enemies/goblin/goblin_run_anim_f0.png" id="6_17tps"]
-[ext_resource type="Texture2D" uid="uid://dasobk16s1fun" path="res://assets/enemies/goblin/goblin_run_anim_f1.png" id="7_y64qe"]
-[ext_resource type="Texture2D" uid="uid://dbslbq56e7cnk" path="res://assets/enemies/goblin/goblin_run_anim_f2.png" id="8_0x8hd"]
-[ext_resource type="Texture2D" uid="uid://hdm4jfrk5gqv" path="res://assets/enemies/goblin/goblin_run_anim_f3.png" id="9_3wbsg"]
+[ext_resource type="Texture2D" uid="uid://bxb72dnan5ukd" path="res://ADDED/cow1.png" id="7_yyaat"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x8hd"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(0, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wbsg"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(197, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2q0rr"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(394, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24xck"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(591, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqtp1"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(788, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhktg"]
+atlas = ExtResource("2_yyaat")
+region = Rect2(985, 0, 197, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u21pb"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(0, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vho8j"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(171, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2t3q"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(342, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osho7"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(513, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exsy4"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(684, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nadka"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(855, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17tps"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(1026, 0, 171, 167)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y64qe"]
+atlas = ExtResource("7_yyaat")
+region = Rect2(1197, 0, 171, 167)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2q0rr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_vho8j")
+"texture": SubResource("AtlasTexture_0x8hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wbsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2q0rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24xck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqtp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhktg")
 }],
-"loop": true,
+"loop": false,
 "name": &"dead",
-"speed": 5.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -40,16 +108,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_17tps")
+"texture": SubResource("AtlasTexture_u21pb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_y64qe")
+"texture": SubResource("AtlasTexture_vho8j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_0x8hd")
+"texture": SubResource("AtlasTexture_g2t3q")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_3wbsg")
+"texture": SubResource("AtlasTexture_osho7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exsy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nadka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17tps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y64qe")
 }],
 "loop": true,
 "name": &"run",
@@ -57,10 +137,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_24xck"]
-size = Vector2(8.75, 9.75)
+size = Vector2(12.25, 12.625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t3q"]
-size = Vector2(8.75, 9.75)
+size = Vector2(12.25, 12.625)
 
 [node name="Goblin" type="CharacterBody2D"]
 scale = Vector2(4, 4)
@@ -68,14 +148,15 @@ collision_layer = 4
 script = ExtResource("1_g2t3q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
 sprite_frames = SubResource("SpriteFrames_2q0rr")
-animation = &"run"
+animation = &"dead"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.332066
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.625, 3.125)
+position = Vector2(-0.125, 2.6875)
 shape = SubResource("RectangleShape2D_24xck")
 
 [node name="EntranceTimer" type="Timer" parent="."]
@@ -87,7 +168,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0.625, 3.125)
+position = Vector2(-0.125, 2.6875)
 shape = SubResource("RectangleShape2D_g2t3q")
 
 [connection signal="timeout" from="EntranceTimer" to="." method="_on_entrance_timer_timeout"]

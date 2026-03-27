@@ -77,6 +77,14 @@ var flamethrower_used_this_wave := false    # Internal: true if used this wave
 signal shoot(pos, dir, damage, is_flame, weapon_type)
 
 
+# DODGE SYSTEM
+var can_dodge := true
+var is_dodging := false
+var dodge_speed := 500
+var dodge_direction := Vector2.ZERO
+var is_invulnerable := false
+
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -120,6 +128,8 @@ func apply_weapon_stats():
 
 
 func get_input():
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	
 #	KEYBOARD INOUT TO ACTIVATE THE SPECIAL GUN HEHE
 	if Input.is_key_pressed(KEY_4) and has_flamethrower:
 		current_weapon = 4
@@ -139,9 +149,15 @@ func get_input():
 		current_weapon = 3
 		apply_weapon_stats()
 	
-#	keyboard input
-	var input_dir = Input.get_vector("left", "right", "up", "down")
-	velocity = input_dir.normalized() * speed
+# DODGE INPUT
+	if Input.is_action_just_pressed("dodge") and can_dodge:
+		start_dodge(input_dir)
+
+	# movement
+	if is_dodging:
+		velocity = dodge_direction * dodge_speed
+	else:
+		velocity = input_dir.normalized() * speed
 	
 #	mouse clicks
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_shoot:
@@ -242,6 +258,42 @@ func validate_weapon():
 
 
 # =====================================================================================
+
+#THIS IS FOR DODDE MECHANIC
+
+func start_dodge(input_dir: Vector2):
+	if input_dir == Vector2.ZERO:
+		return  # no direction = no dash
+		
+	modulate = Color(1, 1, 1, 0.5)  # semi transparent
+	can_dodge = false
+	is_dodging = true
+	is_invulnerable = true
+	
+	dodge_direction = input_dir.normalized()
+	
+	$DodgeTimer.start()
+	$DodgeCooldownTimer.start()
+
+
+func _on_dodge_timer_timeout():
+	is_dodging = false
+	is_invulnerable = false
+	modulate = Color(1, 1, 1, 1)  # back to normal
+
+func _on_dodge_cooldown_timer_timeout():
+	can_dodge = true
+
+
+
+
+
+
+
+
+
+
+
 
 func _physics_process(_delta: float) -> void:
 	get_input()

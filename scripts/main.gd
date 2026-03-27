@@ -18,7 +18,6 @@ func new_game():
 	lives = 3
 	difficulty = 3.0  # 3 for testing purposes.
 	wave_in_transition = false
-	$EnemySpawner/Timer.wait_time = 1.0
 	reset()
 
 func _process(_delta):
@@ -41,7 +40,9 @@ func _process(_delta):
 func reset():
 	wave_in_transition = false  # Allow next wave checks
 
-	max_enemies = int(difficulty)
+	var stats = get_enemy_stats()
+	max_enemies = stats.max_enemies
+	$EnemySpawner/Timer.wait_time = stats.spawn_rate
 	$Player.reset()
 	get_tree().call_group("enemies", "queue_free")
 	get_tree().call_group("bullets", "queue_free")
@@ -52,16 +53,43 @@ func reset():
 	$GameOver.hide()
 	get_tree().paused = true
 	$RestartTimer.start()
-
+	
+	
+#ENEMY FOCUS ============================================================================================
 func _on_enemy_spawner_hit_p() -> void:
+	# 🛡️ INVULNERABILITY CHECK
+	if $Player.is_invulnerable:
+		return
+	
 	lives -= 1
 	$Hud/LivesLabel.text = "X " + str(lives)
 	get_tree().paused = true
+	
 	if lives <= 0:
 		$GameOver/WavesSurvivedLabel.text = "WAVES SURVIVED: " + str(wave - 1)
 		$GameOver.show()
 	else:
 		$WaveOverTimer.start()
+		
+func get_enemy_stats():
+	var stats = {}
+
+	# 📈 SMOOTH SCALING FORMULAS
+	
+	# Enemy count (caps at 15)
+	stats.max_enemies = min(5 + int(wave * 1.2), 15)
+	
+	# Spawn rate (gets faster, min 0.25)
+	stats.spawn_rate = max(1.0 - (wave * 0.05), 0.25)
+	
+	# Normal HP scaling
+	stats.normal_hp = int(20 * pow(1.1, wave - 1))
+	
+	# Fast HP scaling (slightly lower early, catches up)
+	stats.fast_hp = int(15 * pow(1.12, wave - 1))
+	
+	return stats
+	
 
 func _on_wave_over_timer_timeout() -> void:
 	reset()
