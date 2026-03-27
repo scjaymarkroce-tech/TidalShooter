@@ -85,6 +85,9 @@ var dodge_direction := Vector2.ZERO
 var is_invulnerable := false
 
 
+# HUD INTEGRATION
+@onready var hud = get_node("/root/Main/Hud")  # adjust if needed!
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -94,108 +97,97 @@ func _process(_delta: float) -> void:
 	validate_weapon()
 
 func reset():
-#	this is the player starting position, always in the middle of the screen
 	position = screen_size / 2
 	flamethrower_used_this_wave = false
-	# movement reset
 	speed = START_SPEED
 	can_shoot = true
-	
-	# reset timers
 	$ShotTimer.stop()
 	$ReloadTimer.stop()
-	
-	# reset weapon states
 	reloading_weapon = 0
-	
 	for key in is_reloading.keys():
 		is_reloading[key] = false
 		current_ammo[key] = max_ammo[key]
-	
-	# reset weapon cooldown
 	apply_weapon_stats()
-	
-	
+	# --- HUD UPDATES ---
+	hud.update_gun_icon(current_weapon)
+	hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
+	hud.show_reload(false)
+	hud.set_dodge_cooldown(0.0, 1.0)
+
 func apply_weapon_stats():
 	match current_weapon:
-		1: # Pistol
-			$ShotTimer.wait_time = pistol_cooldown
-		2: # Shotgun
-			$ShotTimer.wait_time = shotgun_cooldown
-		3: # Rifle
-			$ShotTimer.wait_time = rifle_cooldown
-			
+		1: $ShotTimer.wait_time = pistol_cooldown
+		2: $ShotTimer.wait_time = shotgun_cooldown
+		3: $ShotTimer.wait_time = rifle_cooldown
 
 
 func get_input():
 	var input_dir = Input.get_vector("left", "right", "up", "down")
-	
-#	KEYBOARD INOUT TO ACTIVATE THE SPECIAL GUN HEHE
+
+	# Weapon selection
 	if Input.is_key_pressed(KEY_4) and has_flamethrower:
 		current_weapon = 4
-	
-#	KEYBOARD INPUT FOR RELOADING
-	if Input.is_key_pressed(KEY_R):
-		reload_weapon(current_weapon)
-	
-#	THIS IS WEAPON CHOOSING USING KEYBOARD	
+		hud.update_gun_icon(current_weapon)
+		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
+
 	if Input.is_key_pressed(KEY_1):
 		current_weapon = 1
 		apply_weapon_stats()
+		hud.update_gun_icon(current_weapon)
+		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 	elif Input.is_key_pressed(KEY_2):
 		current_weapon = 2
 		apply_weapon_stats()
+		hud.update_gun_icon(current_weapon)
+		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 	elif Input.is_key_pressed(KEY_3):
 		current_weapon = 3
 		apply_weapon_stats()
-	
-# DODGE INPUT
+		hud.update_gun_icon(current_weapon)
+		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
+
+	# DODGE
 	if Input.is_action_just_pressed("dodge") and can_dodge:
 		start_dodge(input_dir)
+		hud.start_dodge_cooldown(2.0)
 
-	# movement
+	# Movement
 	if is_dodging:
 		velocity = dodge_direction * dodge_speed
 	else:
 		velocity = input_dir.normalized() * speed
-	
-#	mouse clicks
+
+	# Firing
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_shoot:
 		var dir = (get_global_mouse_position() - position).normalized()
-		
 		if not is_reloading[current_weapon]:
 			match current_weapon:
-				1:	#pistol
+				1:
 					if current_ammo[1] > 0:
 						shoot.emit(position, dir, pistol_damage, false, 1)
 						current_ammo[1] -= 1
-						
-						# ✅ PUT IT HERE
+						hud.update_ammo(current_ammo[1], max_ammo[1])
 						if current_ammo[1] <= 0:
 							reload_weapon(current_weapon)
-				
-				2: #shotgun
+				2:
 					if current_ammo[2] > 0:
 						shoot_shotgun(dir)
 						current_ammo[2] -= 5
-						
-						# ✅ HERE
+						hud.update_ammo(current_ammo[2], max_ammo[2])
 						if current_ammo[2] <= 0:
 							reload_weapon(current_weapon)
-				
-				3:	#rifledddda
+				3:
 					if current_ammo[3] > 0:
 						shoot.emit(position, dir, rifle_damage, false, 3)
 						current_ammo[3] -= 1
-						
-						# ✅ HERE
+						hud.update_ammo(current_ammo[3], max_ammo[3])
 						if current_ammo[3] <= 0:
 							reload_weapon(current_weapon)
 				4:
 					start_flamethrower()
-		
 		can_shoot = false
 		$ShotTimer.start()
+
 		
 func shoot_shotgun(base_dir: Vector2):
 	for i in shotgun_pellets:
@@ -206,80 +198,70 @@ func shoot_shotgun(base_dir: Vector2):
 func reload_weapon(weapon_id: int):
 	if is_reloading[weapon_id]:
 		return
-	
 	is_reloading[weapon_id] = true
-	
-	# async reload (independent per weapon)
-	await get_tree().create_timer(reload_time[weapon_id]).timeout
-	
+	hud.show_reload(true, 0)
+	var elapsed: float = 0.0
+	var total: float = reload_time[weapon_id]
+	while elapsed < total:
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
+		hud.show_reload(true, elapsed / total)
+	if elapsed < total:  # finish waiting if a little short due to frame
+		await get_tree().create_timer(total - elapsed).timeout
 	current_ammo[weapon_id] = max_ammo[weapon_id]
 	is_reloading[weapon_id] = false
+	hud.show_reload(false)
+	hud.update_ammo(current_ammo[weapon_id], max_ammo[weapon_id])
 	
 	
 #	THIS IS THE LOGIC FOR OUR SPECIAL WEAPON =======================================
+# SPECIAL: Flamethrower
 func start_flamethrower():
-	if flamethrower_active:
-		return
-
+	if flamethrower_active: return
 	if has_flamethrower and not flamethrower_used_this_wave:
 		flamethrower_used_this_wave = true
-		flamethrower_pending_remove = true    # Will be removed at wave end
-
+		flamethrower_pending_remove = true
 	flamethrower_active = true
 	fire_flamethrower()
-	
+
 func fire_flamethrower():
 	var time_passed := 0.0
-	
 	while time_passed < flamethrower_duration:
-		# stop if player lets go
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			break
-		
-		# 🔥 dynamically aim every tick
 		var base_dir = (get_global_mouse_position() - position).normalized()
 		var spread_dir = base_dir.rotated(randf_range(-0.2, 0.2))
-		
 		shoot.emit(position, spread_dir, flamethrower_damage, true, 4)
-		
 		await get_tree().create_timer(flamethrower_tick_rate).timeout
 		time_passed += flamethrower_tick_rate
-	
-	# cooldown
 	await get_tree().create_timer(flamethrower_cooldown).timeout
-	
 	flamethrower_active = false
-	
 
 func validate_weapon():
 	if current_weapon == 4 and not has_flamethrower:
 		current_weapon = 1
 		apply_weapon_stats()
 
-
 # =====================================================================================
 
 #THIS IS FOR DODDE MECHANIC
 
+# DODGE MECHANIC
 func start_dodge(input_dir: Vector2):
 	if input_dir == Vector2.ZERO:
-		return  # no direction = no dash
-		
-	modulate = Color(1, 1, 1, 0.5)  # semi transparent
+		return
+	modulate = Color(1, 1, 1, 0.5)
 	can_dodge = false
 	is_dodging = true
 	is_invulnerable = true
-	
 	dodge_direction = input_dir.normalized()
-	
 	$DodgeTimer.start()
 	$DodgeCooldownTimer.start()
-
 
 func _on_dodge_timer_timeout():
 	is_dodging = false
 	is_invulnerable = false
-	modulate = Color(1, 1, 1, 1)  # back to normal
+	modulate = Color(1, 1, 1, 1)
 
 func _on_dodge_cooldown_timer_timeout():
 	can_dodge = true
@@ -295,21 +277,15 @@ func _on_dodge_cooldown_timer_timeout():
 
 
 
+
 func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
-	
-#	limit movement
 	position = position.clamp(Vector2.ZERO, screen_size)
-
-#	player rotation
 	var mouse = get_local_mouse_position()
 	var angle = snappedf(mouse.angle(), PI / 4) / (PI / 4)
 	angle = wrapi(int(angle), 0, 8)
-	
 	$AnimatedSprite2D.animation = "walk" + str(angle)
-	
-#	play animation
 	if velocity.length() != 0 :
 		$AnimatedSprite2D.play()
 	else:
@@ -323,19 +299,15 @@ func boost():
 func quick_fire():
 	$FastFireTimer.start()
 	$ShotTimer.wait_time = FAST_SHOT
-	
+
 func _on_shot_timer_timeout() -> void:
 	can_shoot =  true
 
-
 func _on_boost_timer_timeout() -> void:
 	speed = START_SPEED
-	
-
 
 func _on_fast_fire_timer_timeout() -> void:
 	$ShotTimer.wait_time = NORMAL_SHOT
-
 
 func _on_ReloadTimer_timeout():
 	current_ammo[reloading_weapon] = max_ammo[reloading_weapon]

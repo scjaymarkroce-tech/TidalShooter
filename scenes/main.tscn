@@ -32,13 +32,13 @@ process_mode = 2
 one_shot = true
 
 [node name="Hud" parent="." instance=ExtResource("7_o6xl0")]
-offset = Vector2(0, 768)
-transform = Transform2D(1, 0, 0, 1, 0, 768)
 
 [node name="GameOver" parent="." instance=ExtResource("8_tipki")]
 process_mode = 2
 
 [node name="UpgradeMenu" parent="." instance=ExtResource("9_85g3d")]
+offset_top = 21.0
+offset_bottom = 21.0
 
 [connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]

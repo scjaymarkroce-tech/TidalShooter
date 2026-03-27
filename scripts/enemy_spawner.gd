@@ -32,7 +32,7 @@ func _on_timer_timeout() -> void:
 	var enemy
 	
 	# 👹 BOSS LOGIC (every 5 waves)
-	var is_boss_wave = main_node.wave % 1 == 0
+	var is_boss_wave = main_node.wave % 5 == 0
 	
 	if is_boss_wave and bosses.size() == 0:
 		enemy = boss_scene.instantiate()
