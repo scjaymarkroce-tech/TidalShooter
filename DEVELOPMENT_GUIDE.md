@@ -78,11 +78,11 @@ Fullscreen Target
 |-----------|-----------------|---------------|-------------|----------------|------------------------|
 | 1 – 3     | 20              | 15            | –           | 5              | 1 s                    |
 | 4 – 6     | 25              | 28            | –           | 8              | 0.9 s                  |
-| 5         | 30              | 20            | 100         | 5 + 1 Boss     | 0.8 s                  |
-| 7+        | 30*1.2 per wave | 22*1.2/wave   | +50 hp/5w   | 15*1.2/wave    | 0.7*1.2/wave (min 0.25)|
+| 5         | 30              | 20            | 300         | 5 + 1 Boss     | 0.8 s                  |
+| 7+        | 30*1.2 per wave | 22*1.2/wave   | +250 hp/5w  | 15*1.2/wave    | 0.7*1.2/wave (min 0.25)|
 
 - Max 15 enemies on screen at any time
-- Boss spawns every 5 waves, starting wave 5 (+50 HP every 5 waves)
+- Boss spawns every 5 waves, starting wave 5 (+250 HP every 5 waves)
 
 ---
 
@@ -235,21 +235,21 @@ Fullscreen Target
 - ✔ health + death system
 - ✔ drop system
 - ✔ movement AI
-
+- ✔	fast enemy 
+- ✔	boss enemy
+  
 - ❌ missing:
-  - •	fast enemy 
-  - •	boss enemy 
   - •	scaling table integration 
   - •	spawn rate scaling accuracy 
 
 6.	❌ Player Mechanics — NOT DONE (except basics)
 - ✔ movement
 - ✔ shooting
+- ✔	dodge (Shift) 
+- ✔	invulnerability frames 
+- ✔	dash cooldown system 
   
 - ❌ missing:
-  - •	dodge (Shift) 
-  - •	invulnerability frames 
-  - •	dash cooldown system 
   - •	hit feedback / knockback 
 
 7.	❌ Scoring System — NOT DONE
@@ -262,7 +262,7 @@ Fullscreen Target
 - ✔ wave increment
 - ✔ enemy clearing check
   
-- ❌ missing:
+- ❌ missing: (WE HAVE THIS BUT I THINK IT IS NOT FULLY CHECKED YET)
   - •	exact scaling table implementation 
   - •	boss spawn logic 
   - •	max enemy cap enforcement 
