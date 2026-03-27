@@ -197,8 +197,8 @@ Fullscreen Target
 - ✔ shotgun special logic (5 pellets / shot)
 - ✔ rifle high damage low mag
 - Extra:
-  -per-weapon reload system (async) 🔥 
-  -bug-safe switching during reload 🔥
+  - per-weapon reload system (async) 🔥
+  - bug-safe switching during reload 🔥
 
 2.	Special Weapon: Flamethrower — FUNCTIONAL (✔ but not fully compliant yet)
 - ✔ activated via [4]
@@ -208,7 +208,7 @@ Fullscreen Target
 - ✔ independent behavior from other weapons
 - ✔ controllable direction (fixed your earlier issue)
 
-- ⚠️ Differences from guide (intentional or needs adjustment):
+- ⚠️ Differences from guide (intentional FOR TESTING PURPOSES):
   - •	damage = 2/tick ❌ (guide says 50, but intentionally nerfed for testing purposes) 
   - •	tick rate faster than spec (you improved feel ✔) 
   - •	currently given on wave 1 ❌ (temporary for testing) 
@@ -216,29 +216,26 @@ Fullscreen Target
     - ✔ Mechanically DONE
     - ⚠ Needs tuning + upgrade integration later
 
-3.	❌ Upgrade System — NOT DONE
-- Missing:
-  - •	shotgun level scaling 
-  - •	rifle level scaling 
-  - •	upgrade selection UI 
-  - •	10% flamethrower appearance logic 
-  - 👉 This is your NEXT BIG SYSTEM
+3.	Upgrade System — DONE
+- ✔	shotgun level scaling 
+- ✔	rifle level scaling 
+- ✔	upgrade selection UI 
+- ✔	10% flamethrower appearance logic 
+
 
 4.	⚠️ Game Flow — PARTIALLY DONE
 - ✔ waves exist
 - ✔ wave progression works
 - ✔ pause between waves
-  
-- ❌ missing:
-  -  •	upgrade menu every 3 waves 
-  -  •	return to game after upgrade 
+- ✔	upgrade menu every 3 waves 
+- ✔	return to game after upgrade 
 
 5.	⚠️ Enemy System — PARTIAL
 - ✔ basic enemy exists
 - ✔ health + death system
 - ✔ drop system
 - ✔ movement AI
-  
+
 - ❌ missing:
   - •	fast enemy 
   - •	boss enemy 
