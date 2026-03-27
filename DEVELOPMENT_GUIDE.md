@@ -78,11 +78,11 @@ Fullscreen Target
 |-----------|-----------------|---------------|-------------|----------------|------------------------|
 | 1 – 3     | 20              | 15            | –           | 5              | 1 s                    |
 | 4 – 6     | 25              | 28            | –           | 8              | 0.9 s                  |
-| 5         | 30              | 20            | 100         | 5 + 1 Boss     | 0.8 s                  |
-| 7+        | 30*1.2 per wave | 22*1.2/wave   | +50 hp/5w   | 15*1.2/wave    | 0.7*1.2/wave (min 0.25)|
+| 5         | 30              | 20            | 300         | 5 + 1 Boss     | 0.8 s                  |
+| 7+        | 30*1.2 per wave | 22*1.2/wave   | +250 hp/5w  | 15*1.2/wave    | 0.7*1.2/wave (min 0.25)|
 
 - Max 15 enemies on screen at any time
-- Boss spawns every 5 waves, starting wave 5 (+50 HP every 5 waves)
+- Boss spawns every 5 waves, starting wave 5 (+250 HP every 5 waves)
 
 ---
 
@@ -197,8 +197,8 @@ Fullscreen Target
 - ✔ shotgun special logic (5 pellets / shot)
 - ✔ rifle high damage low mag
 - Extra:
-  -per-weapon reload system (async) 🔥 
-  -bug-safe switching during reload 🔥
+  - per-weapon reload system (async) 🔥
+  - bug-safe switching during reload 🔥
 
 2.	Special Weapon: Flamethrower — FUNCTIONAL (✔ but not fully compliant yet)
 - ✔ activated via [4]
@@ -208,7 +208,7 @@ Fullscreen Target
 - ✔ independent behavior from other weapons
 - ✔ controllable direction (fixed your earlier issue)
 
-- ⚠️ Differences from guide (intentional or needs adjustment):
+- ⚠️ Differences from guide (intentional FOR TESTING PURPOSES):
   - •	damage = 2/tick ❌ (guide says 50, but intentionally nerfed for testing purposes) 
   - •	tick rate faster than spec (you improved feel ✔) 
   - •	currently given on wave 1 ❌ (temporary for testing) 
@@ -216,43 +216,40 @@ Fullscreen Target
     - ✔ Mechanically DONE
     - ⚠ Needs tuning + upgrade integration later
 
-3.	❌ Upgrade System — NOT DONE
-- Missing:
-  - •	shotgun level scaling 
-  - •	rifle level scaling 
-  - •	upgrade selection UI 
-  - •	10% flamethrower appearance logic 
-  - 👉 This is your NEXT BIG SYSTEM
+3.	Upgrade System — DONE
+- ✔	shotgun level scaling 
+- ✔	rifle level scaling 
+- ✔	upgrade selection UI 
+- ✔	10% flamethrower appearance logic 
 
-4.	⚠️ Game Flow — PARTIALLY DONE
+
+4.	Game Flow — DONE
 - ✔ waves exist
 - ✔ wave progression works
 - ✔ pause between waves
-  
-- ❌ missing:
-  -  •	upgrade menu every 3 waves 
-  -  •	return to game after upgrade 
+- ✔	upgrade menu every 3 waves 
+- ✔	return to game after upgrade 
 
-5.	⚠️ Enemy System — PARTIAL
+5.	Enemy System — PARTIAL
 - ✔ basic enemy exists
 - ✔ health + death system
 - ✔ drop system
 - ✔ movement AI
+- ✔	fast enemy 
+- ✔	boss enemy
   
 - ❌ missing:
-  - •	fast enemy 
-  - •	boss enemy 
   - •	scaling table integration 
   - •	spawn rate scaling accuracy 
 
 6.	❌ Player Mechanics — NOT DONE (except basics)
 - ✔ movement
 - ✔ shooting
+- ✔	dodge (Shift) 
+- ✔	invulnerability frames 
+- ✔	dash cooldown system 
   
 - ❌ missing:
-  - •	dodge (Shift) 
-  - •	invulnerability frames 
-  - •	dash cooldown system 
   - •	hit feedback / knockback 
 
 7.	❌ Scoring System — NOT DONE
@@ -265,7 +262,7 @@ Fullscreen Target
 - ✔ wave increment
 - ✔ enemy clearing check
   
-- ❌ missing:
+- ❌ missing: (WE HAVE THIS BUT I THINK IT IS NOT FULLY CHECKED YET)
   - •	exact scaling table implementation 
   - •	boss spawn logic 
   - •	max enemy cap enforcement 
