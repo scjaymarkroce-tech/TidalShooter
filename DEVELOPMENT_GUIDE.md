@@ -223,14 +223,14 @@ Fullscreen Target
 - ✔	10% flamethrower appearance logic 
 
 
-4.	⚠️ Game Flow — PARTIALLY DONE
+4.	Game Flow — DONE
 - ✔ waves exist
 - ✔ wave progression works
 - ✔ pause between waves
 - ✔	upgrade menu every 3 waves 
 - ✔	return to game after upgrade 
 
-5.	⚠️ Enemy System — PARTIAL
+5.	Enemy System — PARTIAL
 - ✔ basic enemy exists
 - ✔ health + death system
 - ✔ drop system
