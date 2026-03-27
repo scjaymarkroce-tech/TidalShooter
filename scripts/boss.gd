@@ -9,8 +9,8 @@ var item_scene := preload("res://scenes/item.tscn")
 signal hit_player
 
 # Boss stats
-var health: int = 100  # starting HP, scale later in spawner
-var speed: int = 60     # slower than normal enemies
+var health: int = 300  # starting HP, scale later in spawner
+var speed: int = 70     # slower than normal enemies
 var alive := true
 
 const DROP_CHANCE : float = 1.0  # boss always drops something
