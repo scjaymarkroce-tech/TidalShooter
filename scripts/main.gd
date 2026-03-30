@@ -16,8 +16,12 @@ func _ready() -> void:
 func new_game():
 	wave = 1
 	lives = 3
-	difficulty = 3.0  # 3 for testing purposes.
+	difficulty = 3.0
 	wave_in_transition = false
+	$UpgradeMenu.upgrade_manager.reset_upgrades()
+	$UpgradeMenu.upgrade_manager.apply_shotgun_stats($Player)
+	$UpgradeMenu.upgrade_manager.apply_rifle_stats($Player)
+	# (and repeat for pistol if you ever add pistol upgrades)
 	reset()
 
 func _process(_delta):

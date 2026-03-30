@@ -1,5 +1,6 @@
 # upgrade_manager.gd - Centralized upgrade tracking system
 
+extends Node
 class_name UpgradeManager
 
 # Track weapon levels (1-5+)
@@ -101,3 +102,9 @@ func get_upgrade_options() -> Array[String]:
 	
 	# If we only have 2 options, that's fine - return them
 	return options
+	
+func reset_upgrades():
+	pistol_level = 1
+	shotgun_level = 1
+	rifle_level = 1
+	has_flamethrower = false

@@ -36,7 +36,11 @@ func update_score(new_score : int):
 
 # --- AMMO ---
 func update_ammo(current: int, max: int):
-	$AmmoLabel.text = "%s / %s" % [str(current), str(max)]
+	if max <= 0:
+		$AmmoLabel.visible = false    # HIDE AMMO LABEL FOR FLAMETHROWER
+	else:
+		$AmmoLabel.visible = true
+		$AmmoLabel.text = "%d / %d" % [current, max]
 
 # --- RELOAD VISUAL ---
 func show_reload(show: bool, percent: float = 0.0):

@@ -40,7 +40,6 @@ func _on_timer_timeout() -> void:
 		# 💀 scale boss HP
 		var boss_level = int(main_node.wave / 5)
 		enemy.health = 250 + (boss_level - 1) * 50
-		
 		enemy.add_to_group("bosses")
 	
 	else:

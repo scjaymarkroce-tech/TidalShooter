@@ -163,6 +163,7 @@ func get_input():
 		if not is_reloading[current_weapon]:
 			match current_weapon:
 				1:
+					hud.show_reload(false)
 					if current_ammo[1] > 0:
 						shoot.emit(position, dir, pistol_damage, false, 1)
 						current_ammo[1] -= 1
@@ -170,6 +171,7 @@ func get_input():
 						if current_ammo[1] <= 0:
 							reload_weapon(current_weapon)
 				2:
+					hud.show_reload(false)
 					if current_ammo[2] > 0:
 						shoot_shotgun(dir)
 						current_ammo[2] -= 5
@@ -177,6 +179,7 @@ func get_input():
 						if current_ammo[2] <= 0:
 							reload_weapon(current_weapon)
 				3:
+					hud.show_reload(false)
 					if current_ammo[3] > 0:
 						shoot.emit(position, dir, rifle_damage, false, 3)
 						current_ammo[3] -= 1
@@ -205,7 +208,11 @@ func reload_weapon(weapon_id: int):
 	while elapsed < total:
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
-		hud.show_reload(true, elapsed / total)
+		# Only update bar if still on this weapon:
+		if current_weapon == weapon_id:
+			hud.show_reload(true, elapsed / total)
+		else:
+			hud.show_reload(false)
 	if elapsed < total:  # finish waiting if a little short due to frame
 		await get_tree().create_timer(total - elapsed).timeout
 	current_ammo[weapon_id] = max_ammo[weapon_id]
@@ -217,6 +224,8 @@ func reload_weapon(weapon_id: int):
 #	THIS IS THE LOGIC FOR OUR SPECIAL WEAPON =======================================
 # SPECIAL: Flamethrower
 func start_flamethrower():
+	hud.show_reload(false)
+	hud.update_ammo(0, 0)
 	if flamethrower_active: return
 	if has_flamethrower and not flamethrower_used_this_wave:
 		flamethrower_used_this_wave = true
