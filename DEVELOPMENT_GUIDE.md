@@ -208,20 +208,11 @@ Fullscreen Target
 - ✔ independent behavior from other weapons
 - ✔ controllable direction (fixed your earlier issue)
 
-- ⚠️ Differences from guide (intentional FOR TESTING PURPOSES):
-  - •	damage = 2/tick ❌ (guide says 50, but intentionally nerfed for testing purposes) 
-  - •	tick rate faster than spec (you improved feel ✔) 
-  - •	currently given on wave 1 ❌ (temporary for testing) 
-- 👉 Verdict:
-    - ✔ Mechanically DONE
-    - ⚠ Needs tuning + upgrade integration later
-
 3.	Upgrade System — DONE
 - ✔	shotgun level scaling 
 - ✔	rifle level scaling 
 - ✔	upgrade selection UI 
 - ✔	10% flamethrower appearance logic 
-
 
 4.	Game Flow — DONE
 - ✔ waves exist
@@ -230,19 +221,19 @@ Fullscreen Target
 - ✔	upgrade menu every 3 waves 
 - ✔	return to game after upgrade 
 
-5.	Enemy System — PARTIAL
+5. ❌ Enemy System — PARTIAL
 - ✔ basic enemy exists
 - ✔ health + death system
 - ✔ drop system
 - ✔ movement AI
 - ✔	fast enemy 
 - ✔	boss enemy
-  
+- ✔ scaling table integration
+- 
 - ❌ missing:
-  - •	scaling table integration 
   - •	spawn rate scaling accuracy 
 
-6.	❌ Player Mechanics — NOT DONE (except basics)
+6.	❌ Player Mechanics — NOT DONE
 - ✔ movement
 - ✔ shooting
 - ✔	dodge (Shift) 
@@ -253,10 +244,11 @@ Fullscreen Target
   - •	hit feedback / knockback 
 
 7.	❌ Scoring System — NOT DONE
-- Missing entirely:
-- •	score tracking 
-- •	combo multiplier 
-- •	timer reset system 
+- ✔	score tracking
+  
+- ❌ missing:
+  - •	combo multiplier 
+  - •	timer reset system 
 
 8.	⚠️ Wave System — BASIC VERSION ONLY
 - ✔ wave increment
@@ -269,9 +261,9 @@ Fullscreen Target
 
 9.	❌ UI / HUD — MINIMAL
 - ✔ wave / lives display
+- ✔	score display
+- ✔	upgrade menu
   
 - ❌ missing:
-  - •	score display 
   - •	combo UI 
-  - •	upgrade menu 
   - •	proper pause menu 
