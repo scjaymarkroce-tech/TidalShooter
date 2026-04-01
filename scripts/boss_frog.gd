@@ -11,8 +11,8 @@ var poison_scene := preload("res://scenes/poison.tscn")
 
 signal hit_player
 
-var health: int = 50  
-var max_health: int = 50
+var health: int = 2050  
+var max_health: int = 2050
 var speed: int = 70     
 var alive := true
 var phase := 1 

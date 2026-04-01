@@ -8,6 +8,13 @@ const DIFF_MULTIPLIER: float = 1.2
 
 var wave_in_transition := false  # Prevents duplicate triggers
 
+# 🖼️ BACKGROUND VARIABLES
+# Make sure the path "World/bg1" matches your scene tree. 
+# If your TileMap is named something else (like "TileMap"), change "World" to that name!
+@onready var bg1 = $World/bg1
+@onready var bg2 = $World/bg2
+@onready var bg3 = $World/bg3
+
 func _ready() -> void:
 	new_game()
 	$GameOver/Panel/PlayAgainButton.pressed.connect(new_game)
@@ -44,6 +51,10 @@ func _process(_delta):
 
 func reset():
 	wave_in_transition = false  # Allow next wave checks
+	
+	# ✨ UPDATE BACKGROUND FOR THE CURRENT WAVE
+	update_background()
+	
 	var stats = get_enemy_stats()
 	max_enemies = stats.max_enemies
 	$EnemySpawner/Timer.wait_time = stats.spawn_rate
@@ -123,4 +134,29 @@ func _on_upgrade_menu_closed():
 	get_tree().paused = true
 	$WaveOverTimer.start()
 	
+
+# ✨ NEW FUNCTION: Handles the background switching logic
+func update_background():
+	# If for some reason the backgrounds aren't found in the tree, skip to prevent crashing
+	if not bg1 or not bg2 or not bg3:
+		return
+		
+	# Calculate which part of the 30-wave cycle we are in (1 to 30)
+	var cycle_wave = ((wave - 1) % 30) + 1
 	
+	# Show the correct one based on the theme!
+	if cycle_wave <= 10:
+		# 🚜 FARM THEME (Waves 1-10)
+		bg1.visible = true
+		bg2.visible = false
+		bg3.visible = false
+	elif cycle_wave <= 20:
+		# 🐀 SEWER THEME (Waves 11-20)
+		bg1.visible = false
+		bg2.visible = true
+		bg3.visible = false
+	else:
+		# 🐸 SWAMP THEME (Waves 21-30)
+		bg1.visible = false
+		bg2.visible = false
+		bg3.visible = true

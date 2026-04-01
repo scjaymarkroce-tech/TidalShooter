@@ -11,8 +11,8 @@ var item_scene := preload("res://scenes/item.tscn")
 signal hit_player
 
 # Boss stats
-var health: int = 450  
-var max_health: int = 450
+var health: int = 1050  
+var max_health: int = 1050
 var speed: int = 70     
 var alive := true
 var phase := 1 

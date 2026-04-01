@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0nxpo1wjd4fb"]
+[gd_scene load_steps=7 format=3 uid="uid://b0nxpo1wjd4fb"]
 
 [ext_resource type="Texture2D" uid="uid://bnd0t5lx6osx3" path="res://assets/Grass.png" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://cdu6w8cqdo7o3" path="res://ADDED/path.png" id="2_rwgxs"]
+[ext_resource type="Texture2D" uid="uid://1hmh4ljf3ky" path="res://ADDED/bg3.png" id="3_4wyf3"]
+[ext_resource type="Texture2D" uid="uid://bb0hdy18vkup6" path="res://ADDED/bg2.png" id="3_k0juu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwgxs"]
 texture = ExtResource("1_nnsk1")
@@ -35,9 +37,25 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608,
 layer_1/name = "Bushes"
 layer_1/tile_data = PackedInt32Array(655360, 393216, 0, 720896, 393216, 0, 786432, 393216, 0, 851968, 393216, 0, 917504, 393216, 0, 983040, 393216, 0, 983041, 393216, 0, 983042, 393216, 0, 983043, 393216, 0, 983044, 393216, 0, 983045, 393216, 0, 983046, 393216, 0, 983047, 393216, 0, 983048, 393216, 0, 983049, 393216, 0, 983050, 393216, 0, 983051, 393216, 0, 983052, 393216, 0, 655388, 393216, 0, 720924, 393216, 0, 786460, 393216, 0, 851996, 393216, 0, 917532, 393216, 0, 983056, 393216, 0, 983057, 393216, 0, 983058, 393216, 0, 983059, 393216, 0, 983060, 393216, 0, 983061, 393216, 0, 983062, 393216, 0, 983063, 393216, 0, 983064, 393216, 0, 983065, 393216, 0, 983066, 393216, 0, 983067, 393216, 0, 983068, 393216, 0, 196608, 393216, 0, 262144, 393216, 0, 0, 393216, 0, 65536, 393216, 0, 131072, 393216, 0, 28, 393216, 0, 65564, 393216, 0, 131100, 393216, 0, 196636, 393216, 0, 262172, 393216, 0, -65520, 393216, 0, -65519, 393216, 0, -65518, 393216, 0, -65517, 393216, 0, -65516, 393216, 0, -65515, 393216, 0, -65514, 393216, 0, -65513, 393216, 0, -65512, 393216, 0, -65511, 393216, 0, -65510, 393216, 0, -65509, 393216, 0, -65508, 393216, 0, -65536, 393216, 0, -65535, 393216, 0, -65534, 393216, 0, -65533, 393216, 0, -65532, 393216, 0, -65531, 393216, 0, -65530, 393216, 0, -65529, 393216, 0, -65528, 393216, 0, -65527, 393216, 0, -65526, 393216, 0, -65525, 393216, 0, -65524, 393216, 0)
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="bg1" type="TextureRect" parent="."]
 offset_top = -15.0
 offset_right = 463.0
 offset_bottom = 259.0
 texture = ExtResource("2_rwgxs")
+expand_mode = 1
+
+[node name="bg2" type="TextureRect" parent="."]
+offset_left = -6.0
+offset_top = -22.0
+offset_right = 463.0
+offset_bottom = 259.0
+texture = ExtResource("3_k0juu")
+expand_mode = 1
+
+[node name="bg3" type="TextureRect" parent="."]
+visible = false
+offset_top = -15.0
+offset_right = 463.0
+offset_bottom = 259.0
+texture = ExtResource("3_4wyf3")
 expand_mode = 1

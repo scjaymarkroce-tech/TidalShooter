@@ -9,8 +9,8 @@ var item_scene := preload("res://scenes/item.tscn")
 signal hit_player
 
 # Boss stats
-var health: int = 50  # starting HP, scale later in spawner
-var max_health: int = 50 # Used for the HP bar
+var health: int = 150  # starting HP, scale later in spawner
+var max_health: int = 150 # Used for the HP bar
 var phase: int = 1 # Track which phase the boss is in
 var speed: int = 70     # slower than normal enemies
 var alive := true

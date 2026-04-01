@@ -13,24 +13,24 @@ signal hit_player
 enum State { TADPOLE, DASHING, VOMITING }
 var current_state = State.TADPOLE
 
-var health: int = 50
-var speed: int = 50 
+var health: int = 150
+var speed: int = 150 
 var alive := true
 
 const DROP_CHANCE : float = 0.5
 
 # --- Phase 1: Tadpole ---
-var incubation_duration := 7.0
+var incubation_duration := 4.0
 var current_incubation := 0.0
 
 # --- Phase 2: Dashing ---
 var is_dashing := false
 var dash_speed := 650
-var dash_timer := 5.0 # Cooldown until next dash
+var dash_timer := 3.0 # Cooldown until next dash
 
 # --- Phase 2: Vomiting ---
 var is_vomiting := false
-var vomit_timer := 3.0 # Cooldown until next vomit
+var vomit_timer := 2.0 # Cooldown until next vomit
 var active_swamps = [] # Keeps track of all swamps this frog made
 
 func _ready() -> void:
