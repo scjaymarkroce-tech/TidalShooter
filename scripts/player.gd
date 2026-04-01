@@ -26,7 +26,7 @@ var shotgun_pellets := 5
 var shotgun_spread := 0.3  # radians (adjust later)
 
 # Rifle (Level 1)
-var rifle_damage := 25
+var rifle_damage := 100 #25 by default
 var rifle_cooldown := 1.2
 
 #========= BASE STATS ============

@@ -32,14 +32,14 @@ func _on_timer_timeout() -> void:
 	var enemy
 	
 	# 👹 BOSS LOGIC (every 5 waves)
-	var is_boss_wave = main_node.wave % 5 == 0
+	var is_boss_wave = main_node.wave % 1 == 0
 	
 	if is_boss_wave and bosses.size() == 0:
 		enemy = boss_scene.instantiate()
 		
 		# 💀 scale boss HP
 		var boss_level = int(main_node.wave / 5)
-		enemy.health = 450 + (boss_level - 1) * 50
+		enemy.health = 50 + (boss_level - 1) * 50
 		enemy.add_to_group("bosses")
 	
 	else:
