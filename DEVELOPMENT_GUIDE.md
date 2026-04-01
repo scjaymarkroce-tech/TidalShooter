@@ -221,7 +221,7 @@ Fullscreen Target
 - ✔	upgrade menu every 3 waves 
 - ✔	return to game after upgrade 
 
-5. ❌ Enemy System — PARTIAL
+5. Enemy System — PARTIAL
 - ✔ basic enemy exists
 - ✔ health + death system
 - ✔ drop system
@@ -229,19 +229,14 @@ Fullscreen Target
 - ✔	fast enemy 
 - ✔	boss enemy
 - ✔ scaling table integration
-- 
-- ❌ missing:
-  - •	spawn rate scaling accuracy 
+- ✔ spawn rate scaling accuracy 
 
-6.	❌ Player Mechanics — NOT DONE
+6.	Player Mechanics
 - ✔ movement
 - ✔ shooting
 - ✔	dodge (Shift) 
 - ✔	invulnerability frames 
 - ✔	dash cooldown system 
-  
-- ❌ missing:
-  - •	hit feedback / knockback 
 
 7.	❌ Scoring System — NOT DONE
 - ✔	score tracking
@@ -263,7 +258,7 @@ Fullscreen Target
 - ✔ wave / lives display
 - ✔	score display
 - ✔	upgrade menu
-  
 - ❌ missing:
   - •	combo UI 
   - •	proper pause menu 
+  - • ui design still looks so bad
