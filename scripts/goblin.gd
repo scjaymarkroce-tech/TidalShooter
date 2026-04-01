@@ -55,6 +55,7 @@ func _physics_process(_delta: float) -> void:
 		
 func die():
 	alive = false
+	ScoreManager.add_points(10)
 	$AnimatedSprite2D.animation = "dead"
 	#$AnimatedSprite2D.stop()
 	# Disable hitbox (Area2D)

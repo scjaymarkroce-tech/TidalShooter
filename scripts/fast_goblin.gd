@@ -9,7 +9,7 @@ var item_scene := preload("res://scenes/item.tscn")
 signal hit_player
 
 var entered : bool
-var speed : int = 180  # ⚡ faster than normal
+var speed : int = 220  # ⚡ faster than normal
 var direction : Vector2
 var alive : bool
 
@@ -47,6 +47,7 @@ func _physics_process(_delta: float) -> void:
 
 func die():
 	alive = false
+	ScoreManager.add_points(15)
 	#$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.animation = "dead"
 	

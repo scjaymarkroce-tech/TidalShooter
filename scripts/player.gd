@@ -69,7 +69,7 @@ var has_flamethrower := false
 var flamethrower_active := false
 var flamethrower_duration := 7.0
 var flamethrower_cooldown := 2.0
-var flamethrower_damage := 5
+var flamethrower_damage := 20
 var flamethrower_tick_rate := 0.1  # 0.1 sec = 10 ticks/sec (feels better than 1/sec)
 var flamethrower_pending_remove := false    # True for the first wave after using it
 var flamethrower_used_this_wave := false    # Internal: true if used this wave
@@ -83,6 +83,8 @@ var is_dodging := false
 var dodge_speed := 500
 var dodge_direction := Vector2.ZERO
 var is_invulnerable := false
+
+
 
 
 # HUD INTEGRATION

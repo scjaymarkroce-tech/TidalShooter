@@ -109,6 +109,7 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	alive = false
+	ScoreManager.add_points(40)
 	#$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.animation = "dead"
 

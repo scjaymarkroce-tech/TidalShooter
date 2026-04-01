@@ -10,13 +10,14 @@ var wave_in_transition := false  # Prevents duplicate triggers
 
 func _ready() -> void:
 	new_game()
-	$GameOver/Button.pressed.connect(new_game)
+	$GameOver/Panel/PlayAgainButton.pressed.connect(new_game)
 	$UpgradeMenu.hide()
 
 func new_game():
 	wave = 1
 	lives = 3
 	difficulty = 3.0
+	ScoreManager.reset_score()
 	wave_in_transition = false
 	$UpgradeMenu.upgrade_manager.reset_upgrades()
 	$UpgradeMenu.upgrade_manager.apply_shotgun_stats($Player)
@@ -27,11 +28,11 @@ func new_game():
 func _process(_delta):
 	if not wave_in_transition and is_wave_completed():
 		wave_in_transition = true   # Start transition
-
+		ScoreManager.add_points(20)
 		if $EnemySpawner/Timer.wait_time > 0.25:
 			$EnemySpawner/Timer.wait_time -= 0.05
 		difficulty += DIFF_MULTIPLIER
-
+		
 		# Show upgrade after every 3rd wave except wave 0/start
 		if wave % 1 == 0 and wave != 0:
 			get_tree().paused = true        # Pause everything except upgrade menu
@@ -43,7 +44,6 @@ func _process(_delta):
 
 func reset():
 	wave_in_transition = false  # Allow next wave checks
-
 	var stats = get_enemy_stats()
 	max_enemies = stats.max_enemies
 	$EnemySpawner/Timer.wait_time = stats.spawn_rate
@@ -70,7 +70,7 @@ func _on_enemy_spawner_hit_p() -> void:
 	get_tree().paused = true
 	
 	if lives <= 0:
-		$GameOver/WavesSurvivedLabel.text = "WAVES SURVIVED: " + str(wave - 1)
+		$GameOver.show_game_over(ScoreManager.score, wave - 1)
 		$GameOver.show()
 	else:
 		$WaveOverTimer.start()
@@ -121,3 +121,5 @@ func _on_upgrade_menu_closed():
 	wave += 1
 	get_tree().paused = true
 	$WaveOverTimer.start()
+	
+	

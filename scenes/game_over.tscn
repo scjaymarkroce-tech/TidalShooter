@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://81yslult5viv"]
+[gd_scene load_steps=7 format=3 uid="uid://81yslult5viv"]
+
+[ext_resource type="Script" uid="uid://be1e240rfgswn" path="res://scripts/game_over.gd" id="1_wqhvx"]
+[ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="2_tbwuq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0nqlu"]
-bg_color = Color(1.05888e-06, 0.687478, 0.680672, 1)
+bg_color = Color(0.199337, 0.470516, 0.328965, 0.537255)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -37,7 +40,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbwuq"]
-bg_color = Color(0.0933579, 0.723263, 0.192008, 1)
+bg_color = Color(0.0501479, 0.44089, 0.106837, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -50,6 +53,7 @@ shadow_size = 5
 shadow_offset = Vector2(5, 5)
 
 [node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_wqhvx")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8
@@ -57,58 +61,118 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -100.0
-offset_right = 200.0
-offset_bottom = 100.0
+offset_left = -334.5
+offset_top = -208.0
+offset_right = 334.5
+offset_bottom = 208.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0nqlu")
 
-[node name="GameOverLabel" type="Label" parent="."]
+[node name="NameLineEdit" type="LineEdit" parent="Panel"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -88.0
-offset_right = 98.0
-offset_bottom = -46.0
+offset_left = -276.5
+offset_top = 23.0
+offset_right = 68.5
+offset_bottom = 71.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_tbwuq")
+text = "Enter Name:"
+placeholder_text = "Enter Name:"
+
+[node name="GameOverLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.5
+offset_top = -168.0
+offset_right = 116.5
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_tbwuq")
 theme_override_font_sizes/font_size = 30
 text = "GAME OVER!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WavesSurvivedLabel" type="Label" parent="."]
+[node name="WavesSurvivedLabel" type="Label" parent="Panel"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -134.0
-offset_top = -21.0
-offset_right = 150.0
-offset_bottom = 21.0
+offset_left = -169.0
+offset_top = -117.0
+offset_right = 186.0
+offset_bottom = -86.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_tbwuq")
 theme_override_font_sizes/font_size = 30
 text = "WAVES SURVIVED: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="ScoreLabel" type="Label" parent="Panel"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = 32.0
-offset_right = 125.0
-offset_bottom = 82.0
+offset_left = -177.5
+offset_top = -45.0
+offset_right = 177.5
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_tbwuq")
+theme_override_font_sizes/font_size = 25
+text = "SCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.5
+offset_top = -77.0
+offset_right = 138.5
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_tbwuq")
+theme_override_font_sizes/font_size = 25
+text = "HighSCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = 106.0
+offset_right = 222.0
+offset_bottom = 156.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 30
@@ -116,3 +180,41 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xeevv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wqhvx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tbwuq")
 text = "PLAY AGAIN"
+
+[node name="MainMenuButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.0
+offset_top = 105.0
+offset_right = -33.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_xeevv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wqhvx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tbwuq")
+text = "QUIT"
+
+[node name="SubmitButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 92.0
+offset_top = 19.0
+offset_right = 246.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxFlat_xeevv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wqhvx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tbwuq")
+text = "SUBMIT"

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://rv3yckew4h5o"]
+[gd_scene load_steps=7 format=3 uid="uid://rv3yckew4h5o"]
 
 [ext_resource type="Script" uid="uid://bg7wikhxfy3jh" path="res://scripts/hud.gd" id="1_6fi6k"]
 [ext_resource type="Texture2D" uid="uid://txysa54jrj7j" path="res://assets/items/heart.png" id="1_ahhtf"]
 [ext_resource type="Texture2D" uid="uid://dpj0bd1ba6sm8" path="res://assets/enemies/goblin/goblin_idle_anim_f0.png" id="2_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://csywhxtghi4fo" path="res://ADDED/tgun1-Photoroom.png" id="3_5ysmq"]
 [ext_resource type="Texture2D" uid="uid://v0k5b4cofbtx" path="res://ADDED/reload.png" id="5_uo2fv"]
+[ext_resource type="Texture2D" uid="uid://cye0vs2lbopx7" path="res://ADDED/dodge.png" id="6_047uy"]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_6fi6k")
@@ -100,11 +101,16 @@ offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.09, 0.09)
-step = 10.0
 value = 100.0
 fill_mode = 4
 texture_progress = ExtResource("5_uo2fv")
 
 [node name="DodgeBar" type="TextureProgressBar" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 37.0
+offset_top = 158.0
+offset_right = 1145.0
+offset_bottom = 1118.0
+scale = Vector2(0.06, 0.06)
+value = 100.0
+fill_mode = 4
+texture_progress = ExtResource("6_047uy")

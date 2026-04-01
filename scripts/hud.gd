@@ -13,11 +13,16 @@ func _ready():
 	rifle_icon = load("res://ADDED/tgun2-Photoroom.png")
 	flamethrower_icon = load("res://ADDED/tgun3-Photoroom.png")
 	update_gun_icon(1)  # default to pistol
-	update_score(0)
+	ScoreManager.score_changed.connect(_on_score_changed)
+	_on_score_changed(ScoreManager.score)
 	update_ammo(0, 0)   # <-- Fix here
 	show_reload(false)
 	set_dodge_cooldown(0.0, 1.0)
-
+	
+func _on_score_changed(new_score: int):
+	$ScoreLabel.text = "SCORE: %d" % new_score
+	
+	
 # --- GUN ICON ---
 func update_gun_icon(weapon_id : int):
 	match weapon_id:

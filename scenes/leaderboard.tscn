@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxs40mh2i71mi"]
+
+[ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="1_mrg81"]
+[ext_resource type="Script" uid="uid://ci4puf4gq5xnl" path="res://scripts/leaderboard.gd" id="1_wgq7h"]
+[ext_resource type="Texture2D" uid="uid://v10o73bljrfc" path="res://ADDED/Gemini_Generated_Image_d8alzgd8alzgd8al.png" id="2_8lgqg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgq7h"]
+bg_color = Color(0.0784314, 0.0784314, 0, 0.533333)
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wgq7h")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1390.0
+offset_bottom = 813.0
+texture = ExtResource("2_8lgqg")
+expand_mode = 1
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 140.0
+offset_top = -288.0
+offset_right = -126.0
+offset_bottom = 322.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgq7h")
+
+[node name="TitleLabel" type="Label" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -238.0
+offset_top = 47.0
+offset_right = 206.0
+offset_bottom = 91.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_mrg81")
+theme_override_font_sizes/font_size = 50
+text = "Leaderboards"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.078
+anchor_top = 0.169
+anchor_right = 0.916
+anchor_bottom = 0.913
+offset_left = 0.171997
+offset_top = -0.0900116
+offset_right = -0.416138
+offset_bottom = 0.0699463
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="LeaderboardList" type="RichTextLabel" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("1_mrg81")
+theme_override_font_sizes/normal_font_size = 25
+text = "practice"
+fit_content = true
+scroll_following = true
+tab_size = 19
+
+[node name="MainMenuButton" type="Button" parent="MainPanel"]
+layout_mode = 0
+offset_left = 1145.0
+offset_top = 635.0
+offset_right = 1222.0
+offset_bottom = 685.0
+theme_override_font_sizes/font_size = 30
+text = "Back"

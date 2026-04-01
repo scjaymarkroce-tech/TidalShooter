@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="TopDownShooter"
-run/main_scene="uid://cbg6ftndwf05a"
+run/main_scene="uid://c17pkimncu6h7"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 upgrade_manager="*res://scripts/upgrade_manager.gd"
+ScoreManager="*res://scripts/ScoreManager.gd"
+LeaderboardManager="*res://scripts/LeaderboardManager.gd"
 
 [display]
 
