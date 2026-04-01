@@ -2,9 +2,14 @@ extends Node2D
 
 @onready var main = get_node("/root/Main")
 
-var enemy_scene := preload("res://scenes/goblin.tscn")
+#var enemy_scene := preload("res://scenes/goblin.tscn")
+#var enemy_scene := preload("res://scenes/minion_frog.tscn") 
+var enemy_scene := preload("res://scenes/burrow_rat.tscn") 
+
 var fast_enemy_scene := preload("res://scenes/fast_goblin.tscn")
-var boss_scene := preload("res://scenes/boss.tscn")
+#var boss_scene := preload("res://scenes/boss.tscn")
+#var boss_scene := preload("res://scenes/boss_rat.tscn")
+var boss_scene := preload("res://scenes/boss_frog.tscn") 
 
 var spawn_points := []
 
@@ -32,14 +37,14 @@ func _on_timer_timeout() -> void:
 	var enemy
 	
 	# 👹 BOSS LOGIC (every 5 waves)
-	var is_boss_wave = main_node.wave % 1 == 0
+	var is_boss_wave = main_node.wave % 5 == 0
 	
 	if is_boss_wave and bosses.size() == 0:
 		enemy = boss_scene.instantiate()
 		
 		# 💀 scale boss HP
-		var boss_level = int(main_node.wave / 5)
-		enemy.health = 50 + (boss_level - 1) * 50
+		#var boss_level = int(main_node.wave / 5)
+		#enemy.health = 50 + (boss_level - 1) * 50
 		enemy.add_to_group("bosses")
 	
 	else:

@@ -51,6 +51,7 @@ func reset():
 	get_tree().call_group("enemies", "queue_free")
 	get_tree().call_group("bullets", "queue_free")
 	get_tree().call_group("items", "queue_free")
+	get_tree().call_group("swamps", "queue_free")
 	$Hud/LivesLabel.text = "X " + str(lives)
 	$Hud/WaveLabel.text = "WAVE: " + str(wave)
 	$Hud/EnemiesLabel.text = "X " + str(max_enemies)
