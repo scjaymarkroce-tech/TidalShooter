@@ -72,6 +72,7 @@ func reset():
 	
 	
 #ENEMY FOCUS ============================================================================================
+#ENEMY FOCUS ============================================================================================
 func _on_enemy_spawner_hit_p() -> void:
 	# 🛡️ INVULNERABILITY CHECK
 	if $Player.is_invulnerable:
@@ -82,6 +83,9 @@ func _on_enemy_spawner_hit_p() -> void:
 	get_tree().paused = true
 	
 	if lives <= 0:
+		# 🐛 THE FIX: Always guarantee time goes back to normal when Game Over hits!
+		Engine.time_scale = 1.0 
+		
 		$GameOver.show_game_over(ScoreManager.score, wave - 1)
 		$GameOver.show()
 	else:
@@ -162,15 +166,29 @@ func update_background():
 		bg3.visible = true
 		
 
-# ⏭️ CHEAT CODE: Press '0' to instantly kill all enemies and advance the wave!
+# ⏭️ CHEAT CODES
 func _unhandled_input(event: InputEvent) -> void:
+	
+	# 💥 INSTANT KILL ALL: Press '0'
 	if event is InputEventKey and event.pressed and event.keycode == KEY_0:
 		# Nuke all normal enemies
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if enemy.alive and enemy.has_method("take_damage"):
-				enemy.take_damage(9999) # Instant death
+				enemy.take_damage(9999) 
 				
 		# Nuke all bosses
 		for boss in get_tree().get_nodes_in_group("bosses"):
 			if boss.alive and boss.has_method("take_damage"):
-				boss.take_damage(9999) # Instant death
+				boss.take_damage(9999) 
+
+
+	# ⏩ INSTANT LEVEL JUMP: Press '5' to jump straight to the Wave 5 Boss!
+	if event is InputEventKey and event.pressed and event.keycode == KEY_5:
+		# If the game is paused (like in the upgrade menu), unpause it so we can jump
+		get_tree().paused = false 
+		
+		# Set the wave directly to 5
+		wave = 25
+		
+		# Force the game to reset and immediately load the new wave
+		reset()

@@ -165,13 +165,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 68.0
-offset_top = 111.0
-offset_right = -984.0
-offset_bottom = -148.0
+offset_left = 105.0
+offset_top = 140.0
+offset_right = -947.0
+offset_bottom = -119.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.09001, 0.888252)
+scale = Vector2(0.9, 0.733)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
 
 [node name="TextureRect" type="TextureRect" parent="Panel2"]
@@ -190,13 +190,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 956.0
-offset_top = 111.0
-offset_right = -96.0
-offset_bottom = -148.0
+offset_left = 993.0
+offset_top = 140.0
+offset_right = -59.0
+offset_bottom = -119.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.09001, 0.888252)
+scale = Vector2(0.9, 0.733)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
 
 [node name="TextureRect" type="TextureRect" parent="Panel3"]
@@ -215,13 +215,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 516.0
-offset_top = 111.0
-offset_right = -536.0
-offset_bottom = -148.0
+offset_left = 553.0
+offset_top = 140.0
+offset_right = -499.0
+offset_bottom = -119.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.09001, 0.888252)
+scale = Vector2(0.9, 0.733)
 theme_override_styles/panel = SubResource("StyleBoxFlat_e3qxy")
 
 [node name="TextureRect" type="TextureRect" parent="Panel4"]

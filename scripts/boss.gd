@@ -9,119 +9,244 @@ var item_scene := preload("res://scenes/item.tscn")
 signal hit_player
 
 # Boss stats
-var health: int = 150  # starting HP, scale later in spawner
-var max_health: int = 150 # Used for the HP bar
-var phase: int = 1 # Track which phase the boss is in
-var speed: int = 70     # slower than normal enemies
-var alive := true
+var health: int = 150  
+var max_health: int = 150 
+var phase: int = 1 
+var speed: int = 70     
+var alive := false 
+var is_spawning := true 
+var is_transitioning := false 
 
-const DROP_CHANCE : float = 1.0  # boss always drops something
+const DROP_CHANCE : float = 1.0  
 
 var direction := Vector2.ZERO
-
 var is_dashing := false
 var can_dash := true
 var dash_speed := 1800
 var dash_direction := Vector2.ZERO
 var can_use_abilities := false
 
-#@onready var hp_bar = $HPBar # Make sure to add a ProgressBar node!
-@onready var dash_line = $DashLine # Add this at the top with your other @onready variables
+@onready var dash_line = $DashLine 
 
+# ✨ BOSS UI VARIABLES
+var boss_ui_layer: CanvasLayer
+var world_dimmer: ColorRect
+var big_hp_bar: ProgressBar
+var damage_catchup_bar: ProgressBar
+var boss_name_label: Label
 
 func _ready() -> void:
+	visible = false
+	set_physics_process(false)
+	$Area2D.set_deferred("monitoring", false)
+	
+	if has_node("ProgressBar"): $ProgressBar.visible = false
+	if dash_line: dash_line.visible = false
+		
+	show_warning_sequence()
+
+func _exit_tree() -> void:
+	if is_instance_valid(boss_ui_layer):
+		boss_ui_layer.queue_free()
+	
+	Engine.time_scale = 1.0 
+
+# --- 🎬 DRAMATIC BOSS INTRO ---
+func show_warning_sequence():
+	# 🛑 PAUSE THE GAME: This freezes the player, bullets, and stops the spawner!
+	get_tree().paused = true
+	
+	var warning_layer = CanvasLayer.new()
+	warning_layer.layer = 100
+	main.add_child(warning_layer)
+	
+	var dark_bg = ColorRect.new()
+	dark_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dark_bg.color = Color(0.1, 0.0, 0.0, 0.6) 
+	# 🐛 FIX: Stop the background from eating mouse clicks!
+	dark_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	warning_layer.add_child(dark_bg)
+	
+	var label = Label.new()
+	label.text = "⚠️ WARNING ⚠️\nBOSS APPROACHING"
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.position.y -= 50
+	label.add_theme_font_size_override("font_size", 60)
+	label.add_theme_color_override("font_color", Color(1.0, 0.2, 0.2, 1.0))
+	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	label.add_theme_constant_override("outline_size", 12)
+	# 🐛 FIX
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	warning_layer.add_child(label)
+	
+	var tween = create_tween().set_loops(3)
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+	tween.tween_property(label, "modulate:a", 0.1, 0.25)
+	tween.tween_property(label, "modulate:a", 1.0, 0.25)
+	
+	await get_tree().create_timer(1.5, true, false, true).timeout
+	warning_layer.queue_free()
+	
+	# ▶️ UNPAUSE THE GAME: Let the fight begin!
+	get_tree().paused = false
+	start_actual_boss_fight()
+
+func start_actual_boss_fight():
+	is_spawning = false
 	alive = true
+	visible = true
 	max_health = health
+	set_physics_process(true)
+	$Area2D.set_deferred("monitoring", true)
+	
 	direction = (player.position - position).normalized()
 	$AnimatedSprite2D.play("run")
+	setup_epic_boss_ui()
 	
-	if has_node("ProgressBar"):
-		$ProgressBar.max_value = max_health
-		$ProgressBar.value = health
-	
-	# Hide the new dash line initially
-	if dash_line:
-		dash_line.visible = false
-		
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(3.0, true, false, true).timeout
 	can_use_abilities = true
+
+# --- ✨ EPIC BOSS UI ---
+func setup_epic_boss_ui():
+	boss_ui_layer = CanvasLayer.new()
+	boss_ui_layer.layer = 50 
+	main.add_child(boss_ui_layer)
 	
+	# 🌑 World Dimmer 
+	world_dimmer = ColorRect.new()
+	world_dimmer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	world_dimmer.color = Color(0, 0, 0, 0.0) 
+	# 🐛 FIX: This is the invisible wall that was blocking the Game Over screen!
+	world_dimmer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	boss_ui_layer.add_child(world_dimmer)
 	
+	# 1. Catch-up Bar
+	damage_catchup_bar = ProgressBar.new()
+	damage_catchup_bar.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	damage_catchup_bar.offset_top = -100 
+	damage_catchup_bar.offset_bottom = -70
+	damage_catchup_bar.offset_left = 200
+	damage_catchup_bar.offset_right = -200
+	damage_catchup_bar.show_percentage = false
+	damage_catchup_bar.max_value = max_health
+	damage_catchup_bar.value = 0 
+	# 🐛 FIX
+	damage_catchup_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var catchup_bg = StyleBoxFlat.new()
+	catchup_bg.bg_color = Color(0.1, 0.05, 0.05, 0.9) 
+	catchup_bg.border_width_bottom = 8
+	catchup_bg.border_width_top = 8
+	catchup_bg.border_width_left = 8
+	catchup_bg.border_width_right = 8
+	catchup_bg.border_color = Color(0.8, 0.6, 0.1, 1.0) 
+	catchup_bg.corner_radius_top_left = 12
+	catchup_bg.corner_radius_top_right = 12
+	catchup_bg.corner_radius_bottom_left = 12
+	catchup_bg.corner_radius_bottom_right = 12
+	
+	var catchup_fill = StyleBoxFlat.new()
+	catchup_fill.bg_color = Color(1.0, 0.8, 0.2, 1.0) 
+	catchup_fill.corner_radius_top_left = 6
+	catchup_fill.corner_radius_top_right = 6
+	catchup_fill.corner_radius_bottom_left = 6
+	catchup_fill.corner_radius_bottom_right = 6
+	
+	damage_catchup_bar.add_theme_stylebox_override("background", catchup_bg)
+	damage_catchup_bar.add_theme_stylebox_override("fill", catchup_fill)
+	
+	# 2. Main HP Bar
+	big_hp_bar = ProgressBar.new()
+	big_hp_bar.set_anchors_preset(Control.PRESET_FULL_RECT) 
+	big_hp_bar.show_percentage = false
+	big_hp_bar.max_value = max_health
+	big_hp_bar.value = 0 
+	# 🐛 FIX
+	big_hp_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var empty_bg = StyleBoxEmpty.new() 
+	var fill_style = StyleBoxFlat.new()
+	fill_style.bg_color = Color(0.3, 0.8, 0.2, 1.0) 
+	fill_style.corner_radius_top_left = 6
+	fill_style.corner_radius_top_right = 6
+	fill_style.corner_radius_bottom_left = 6
+	fill_style.corner_radius_bottom_right = 6
+	
+	big_hp_bar.add_theme_stylebox_override("background", empty_bg)
+	big_hp_bar.add_theme_stylebox_override("fill", fill_style)
+	
+	# 3. Boss Name
+	boss_name_label = Label.new()
+	boss_name_label.text = "- THE PLAGUE HARVESTER -"
+	boss_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_name_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	boss_name_label.offset_top = -35 
+	boss_name_label.add_theme_font_size_override("font_size", 28)
+	boss_name_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.6, 1.0)) 
+	boss_name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	boss_name_label.add_theme_constant_override("outline_size", 8)
+	# 🐛 FIX
+	boss_name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	damage_catchup_bar.add_child(big_hp_bar)
+	damage_catchup_bar.add_child(boss_name_label)
+	boss_ui_layer.add_child(damage_catchup_bar)
+	
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+	tween.tween_property(world_dimmer, "color:a", 0.4, 1.0) 
+	tween.parallel().tween_property(damage_catchup_bar, "offset_top", 50, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(damage_catchup_bar, "offset_bottom", 80, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(big_hp_bar, "value", max_health, 1.5).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(damage_catchup_bar, "value", max_health, 1.5).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+
 func _physics_process(_delta: float) -> void:
-	if not alive:
+	if not alive or is_spawning or is_transitioning:
 		return
 
-	# 🟥 DASHING STATE
 	if is_dashing:
 		velocity = dash_direction * dash_speed
 		move_and_slide()
-		
-		# ✨ DRAMATIC GHOST TRAIL: Spawn a ghost every 3 frames
 		if Engine.get_physics_frames() % 3 == 0:
 			create_dash_ghost()
-			
 		return
 
-	# 🧠 NORMAL CHASE
 	direction = (player.position - position).normalized()
 	velocity = direction * speed
 	move_and_slide()
 
-	# flip sprite
 	if velocity.x != 0:
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 		
 	if can_dash and can_use_abilities and not is_dashing:
 		start_dash_attack()
 
-
 func start_dash_attack():
 	can_dash = false
-	
-	# lock direction at moment of cast
 	dash_direction = (player.position - position).normalized()
-	
 	show_dash_line()
 	$DashTimer.start()
 
-
 func show_dash_line():
-	if not dash_line:
-		return
-		
+	if not dash_line: return
 	dash_line.visible = true
-	
-	# Calculate exactly how far the boss will dash (speed * dash duration of 0.4s)
 	var dash_distance = dash_speed * 0.4 
-	
-	# Because the boss scales up 5x in Phase 2, we divide by scale.x
-	# so the line accurately shows the distance without being 5x too long!
 	var local_target = dash_direction * (dash_distance / scale.x)
-	
-	# Draw the line from the center of the boss to the target
 	dash_line.clear_points()
 	dash_line.add_point(Vector2.ZERO)
 	dash_line.add_point(local_target)
-	
-	# --- WARNING ANIMATION ---
-	# Start thin and slightly transparent red
 	dash_line.default_color = Color(1.0, 0.0, 0.0, 0.2)
 	dash_line.width = 3.0 
 	
-	var tween = create_tween()
-	tween.set_parallel(true)
-	
-	# Over the duration of the wind-up ($DashTimer.wait_time), fade to solid red
+	var tween = create_tween().set_parallel(true)
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
 	tween.tween_property(dash_line, "default_color", Color(1.0, 0.0, 0.0, 0.8), $DashTimer.wait_time)
-	
-	# Also make the line grow much thicker, screaming "DANGER!"
-	# (In phase 2, it will appear even thicker due to the 5x boss scale)
 	tween.tween_property(dash_line, "width", 7.0, $DashTimer.wait_time)
-	
 
 func take_damage(amount: int) -> void:
-	if not alive:
-		return
+	if not alive or is_transitioning: return
 
 	health -= amount
 	update_hp_bar()
@@ -132,65 +257,96 @@ func take_damage(amount: int) -> void:
 		else:
 			die()
 			
-# New function to handle Phase 2 transition
+# --- 🎬 CINEMATIC PHASE 2 ---
 func enter_phase_2() -> void:
+	is_transitioning = true 
 	phase = 2
+	$Area2D.set_deferred("monitoring", false) 
 	
-	# Double the max HP
+	Engine.time_scale = 0.1
+	
+	var flash = ColorRect.new()
+	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
+	flash.color = Color(1.0, 0.0, 0.0, 0.4) 
+	flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	boss_ui_layer.add_child(flash)
+	
+	await get_tree().create_timer(0.8, true, false, true).timeout 
+	
+	Engine.time_scale = 1.0
+	if is_instance_valid(flash): flash.queue_free()
+	
 	max_health *= 2  
 	health = max_health 
 	
-	# Update the HP Bar to match the new max health
-	if has_node("ProgressBar"):
-		$ProgressBar.max_value = max_health
-		# 🎨 TINT EFFECT: Turn the HP bar bright red!
-		$ProgressBar.modulate = Color(1, 0.2, 0.2) 
-	update_hp_bar()
-	
-	# Make the boss bigger and look angry!
-	var tween = create_tween()
-	tween.set_parallel(true) # This makes all tweens happen at the exact same time
-	
-	# Scales the boss up by 5x over 1 seconds
+	var tween = create_tween().set_parallel(true)
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
 	tween.tween_property(self, "scale", Vector2(5, 5), 1.0)
-	
-	# 🎨 TINT EFFECT: Slowly turn the boss's sprite an angry red!
-	# Color(Red, Green, Blue) -> 1.0 is full red, 0.3 for green/blue makes it heavily red-tinted
 	tween.tween_property($AnimatedSprite2D, "modulate", Color(1.0, 0.3, 0.3), 1.0)
 	
-	# Make him a little faster
+	if is_instance_valid(big_hp_bar):
+		tween.tween_property(world_dimmer, "color", Color(0.2, 0.0, 0.0, 0.5), 1.0)
+		
+		big_hp_bar.max_value = max_health
+		damage_catchup_bar.max_value = max_health
+		
+		var fill_style = big_hp_bar.get_theme_stylebox("fill").duplicate()
+		fill_style.bg_color = Color(0.9, 0.1, 0.1, 1.0) 
+		big_hp_bar.add_theme_stylebox_override("fill", fill_style)
+		
+		var catchup_bg = damage_catchup_bar.get_theme_stylebox("background").duplicate()
+		catchup_bg.border_color = Color(1.0, 0.2, 0.0, 1.0) 
+		damage_catchup_bar.add_theme_stylebox_override("background", catchup_bg)
+		
+		boss_name_label.text = "- ENRAGED HARVESTER -"
+		boss_name_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.1, 1.0))
+		
+		var shake = create_tween().set_loops(12)
+		shake.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+		shake.tween_property(damage_catchup_bar, "position:x", damage_catchup_bar.position.x + 15, 0.05)
+		shake.tween_property(damage_catchup_bar, "position:x", damage_catchup_bar.position.x - 15, 0.05)
+		shake.chain().tween_property(damage_catchup_bar, "position:x", 200, 0.05) 
+		
+		tween.tween_property(big_hp_bar, "value", max_health, 1.0).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(damage_catchup_bar, "value", max_health, 1.0).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	
 	speed += 30
-	dash_speed += 500 # Make the huge boss dash much faster!
-	
-	# 🎬 ANIMATION EFFECT: Make his running and dashing animations play 50% faster!
+	dash_speed += 500 
 	$AnimatedSprite2D.speed_scale = 1.5 
-	
 	$DashCooldownTimer.start()
-
+	
+	await get_tree().create_timer(1.0, true, false, true).timeout
+	$Area2D.set_deferred("monitoring", true)
+	is_transitioning = false 
 
 func update_hp_bar() -> void:
-	if has_node("ProgressBar"):
-		$ProgressBar.value = health
-	
+	if is_instance_valid(big_hp_bar) and is_instance_valid(damage_catchup_bar):
+		big_hp_bar.value = health
+		var tween = create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+		tween.tween_property(damage_catchup_bar, "value", health, 0.6).set_delay(0.2).set_trans(Tween.TRANS_SINE)
 
 func die() -> void:
 	alive = false
-	is_dashing = false # Force dash to stop immediately
+	is_dashing = false 
+	Engine.time_scale = 1.0 
+	
 	ScoreManager.add_points(40)
 	$AnimatedSprite2D.play("dead") 
 
-	# disable collisions
 	$Area2D.set_deferred("monitoring", false)
 	set_deferred("collision_layer", 0)
 	set_deferred("collision_mask", 0)
 	
-	# Hide the HP bar when dead
-	if has_node("ProgressBar"):
-		$ProgressBar.visible = false
+	# ✨ FADE OUT EPIC UI
+	if is_instance_valid(boss_ui_layer):
+		var tween = create_tween().set_parallel(true)
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+		tween.tween_property(damage_catchup_bar, "modulate:a", 0.0, 1.0)
+		tween.tween_property(world_dimmer, "color:a", 0.0, 1.0)
+		tween.chain().tween_callback(boss_ui_layer.queue_free)
 
-	# drop loot
-	if randf() <= DROP_CHANCE:
-		drop_item()
+	if randf() <= DROP_CHANCE: drop_item()
 
 	var explosion = explosion_scene.instantiate()
 	explosion.position = position
@@ -210,50 +366,34 @@ func drop_item() -> void:
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	hit_player.emit()
 
-
 func _on_DashCooldown_timer_timeout() -> void:
 	can_dash = true
 
-
 func _on_DashTimer_timeout() -> void:
-	if dash_line:
-		dash_line.visible = false
+	if dash_line: dash_line.visible = false
 	
 	is_dashing = true
 	$AnimatedSprite2D.play("dash")
 	
-	# dash duration
-	await get_tree().create_timer(0.4).timeout
-	
-	# 🐛 THE BUG FIX: If the boss died while we were waiting for the dash to finish, stop here!
-	if not alive:
-		return
+	await get_tree().create_timer(0.4, true, false, true).timeout
+	if not alive: return
 	
 	is_dashing = false
 	$AnimatedSprite2D.play("run")
-
 	$DashCooldownTimer.start()
 
-
-# ✨ DRAMATIC DASH EFFECTS ✨
 func create_dash_ghost():
 	var ghost = Sprite2D.new()
-	# Grab the exact frame of animation the boss is currently in
+	ghost.add_to_group("bullets") 
 	var current_frame = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
 	ghost.texture = current_frame
 	ghost.global_position = global_position
-	
-	# Match the boss's size and direction
 	ghost.scale = scale * $AnimatedSprite2D.scale 
 	ghost.flip_h = $AnimatedSprite2D.flip_h
-	
-	# Give it a badass glowing red tint
 	ghost.modulate = Color(1.0, 0.2, 0.2, 0.6) 
-	
-	# Add it to the world behind the boss
 	main.add_child(ghost)
 	
-	# Make it quickly fade away and delete itself
 	var tween = create_tween()
-	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) # Fade to invisible over 0.3s
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) 
 	tween.tween_callback(ghost.queue_free)

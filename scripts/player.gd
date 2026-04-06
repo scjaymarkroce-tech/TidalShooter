@@ -84,7 +84,9 @@ var dodge_speed := 500
 var dodge_direction := Vector2.ZERO
 var is_invulnerable := false
 
-
+# ✨ PERFECT DODGE SYSTEM
+var has_perfect_dodged := false
+var perfect_dodge_distance := 60.0 # How close you must be to trigger the slow-mo
 
 
 # HUD INTEGRATION
@@ -207,16 +209,23 @@ func reload_weapon(weapon_id: int):
 	hud.show_reload(true, 0)
 	var elapsed: float = 0.0
 	var total: float = reload_time[weapon_id]
+	
 	while elapsed < total:
+		# 🐛 FIX: Stop reloading if the player died or left the scene!
+		if not is_inside_tree(): return 
+		
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
-		# Only update bar if still on this weapon:
+		
 		if current_weapon == weapon_id:
 			hud.show_reload(true, elapsed / total)
 		else:
 			hud.show_reload(false)
-	if elapsed < total:  # finish waiting if a little short due to frame
+			
+	if elapsed < total: 
+		if not is_inside_tree(): return # 🐛 FIX
 		await get_tree().create_timer(total - elapsed).timeout
+		
 	current_ammo[weapon_id] = max_ammo[weapon_id]
 	is_reloading[weapon_id] = false
 	hud.show_reload(false)
@@ -253,15 +262,19 @@ func validate_weapon():
 		current_weapon = 1
 		apply_weapon_stats()
 
+
 # =====================================================================================
-
-#THIS IS FOR DODDE MECHANIC
-
 # DODGE MECHANIC
 func start_dodge(input_dir: Vector2):
 	if input_dir == Vector2.ZERO:
 		return
-	modulate = Color(1, 1, 1, 0.5)
+	
+	has_perfect_dodged = false 
+	dodge_speed = 500 # Reset dodge speed to normal
+	
+	# 🌾 GREEN/YELLOW: Turn slightly yellow-green during dodge
+	modulate = Color(0.8, 1.0, 0.4, 0.8) 
+	
 	can_dodge = false
 	is_dodging = true
 	is_invulnerable = true
@@ -269,40 +282,109 @@ func start_dodge(input_dir: Vector2):
 	$DodgeTimer.start()
 	$DodgeCooldownTimer.start()
 
+
 func _on_dodge_timer_timeout():
 	is_dodging = false
 	is_invulnerable = false
+	dodge_speed = 500 # Reset speed back to normal
 	modulate = Color(1, 1, 1, 1)
 
 func _on_dodge_cooldown_timer_timeout():
 	can_dodge = true
 
 
-
-
-
-
-
-
-
-
-
-
-
 func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	# ✨ 1. DODGE GHOST TRAILS
+	if is_dodging and Engine.get_physics_frames() % 3 == 0:
+		create_dodge_ghost()
+		
+	# ✨ 2. PERFECT DODGE CHECK (Are we phasing through an enemy?)
+	if is_dodging and not has_perfect_dodged:
+		check_perfect_dodge()
+
 	var mouse = get_local_mouse_position()
 	var angle = snappedf(mouse.angle(), PI / 4) / (PI / 4)
 	angle = wrapi(int(angle), 0, 8)
 	$AnimatedSprite2D.animation = "walk" + str(angle)
+	
 	if velocity.length() != 0 :
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
 		$AnimatedSprite2D.frame = 1
 
+
+# ✨ NEW: VISUAL GHOST TRAIL
+func create_dodge_ghost():
+	var ghost = Sprite2D.new()
+	var current_frame = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
+	ghost.texture = current_frame
+	ghost.global_position = global_position
+	ghost.scale = scale * $AnimatedSprite2D.scale 
+	
+	# 🌾 GREEN/YELLOW neon trail
+	ghost.modulate = Color(0.6, 1.0, 0.2, 0.6) 
+	get_parent().add_child(ghost)
+	
+	var tween = create_tween()
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) 
+	tween.tween_callback(ghost.queue_free)
+
+# ✨ NEW: PERFECT DODGE DETECTION & SLOW-MO
+func check_perfect_dodge():
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	var bosses = get_tree().get_nodes_in_group("bosses")
+	var all_enemies = enemies + bosses
+	
+	for enemy in all_enemies:
+		if enemy.alive and global_position.distance_to(enemy.global_position) < perfect_dodge_distance:
+			trigger_perfect_dodge()
+			return # Stop checking, we already dodged successfully
+
+func trigger_perfect_dodge():
+	has_perfect_dodged = true
+	
+	# ⚡ REWARD: Make this specific dash 15% longer/faster!
+	dodge_speed *= 1.15 
+	
+	# 1. Slow down time drastically (WITCH TIME!)
+	Engine.time_scale = 0.2
+	
+	# 2. Flash the screen slightly yellow-green 🌾
+	var flash = ColorRect.new()
+	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
+	flash.color = Color(0.6, 1.0, 0.2, 0.2)
+	get_node("/root/Main").add_child(flash)
+	
+	# 3. Create floating "PERFECT DODGE" Text
+	var text = Label.new()
+	text.text = "PERFECT DODGE!"
+	text.modulate = Color(0.8, 1.0, 0.2, 1.0) # 🌾 Bright yellow-green text
+	text.add_theme_font_size_override("font_size", 30)
+	text.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	text.add_theme_constant_override("outline_size", 4)
+	text.global_position = global_position + Vector2(-80, -50)
+	get_parent().add_child(text)
+	
+	# 4. Animate it all! (Note: Tweens need to ignore time_scale during slow-mo)
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	tween.tween_property(text, "global_position:y", text.global_position.y - 50, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(text, "modulate:a", 0.0, 0.5).set_delay(0.2)
+	tween.parallel().tween_property(flash, "color:a", 0.0, 0.3)
+	
+	tween.tween_callback(text.queue_free)
+	tween.tween_callback(flash.queue_free)
+	
+	await get_tree().create_timer(0.5, true, false, true).timeout 
+	Engine.time_scale = 1.0
+
+# --- WEAPON TIMERS ---
 func boost():
 	$BoostTimer.start()
 	speed = BOOST_SPEED
