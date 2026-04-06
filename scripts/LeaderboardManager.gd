@@ -15,6 +15,9 @@ func load_leaderboard():
 		file.close()
 	else:
 		leaderboard_data = []
+		
+	# FORCE A RESORT EVERY TIME WE LOAD (Fixes old bad data!)
+	sort_leaderboard()
 
 func save_leaderboard():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -23,10 +26,14 @@ func save_leaderboard():
 
 func submit_score(name: String, score: int) -> void:
 	leaderboard_data.append({ "name": name, "score": score })
-	leaderboard_data.sort_custom(_sort_scores)
-	leaderboard_data = leaderboard_data.slice(0, MAX_ENTRIES)
+	sort_leaderboard()
 	save_leaderboard()
 
-func _sort_scores(a, b):
-	return int(b["score"]) - int(a["score"])
+# Creates a dedicated sorting function to guarantee order
+func sort_leaderboard():
+	# In Godot 4, you can use a lambda function directly inside sort_custom
+	leaderboard_data.sort_custom(func(a, b): return int(a["score"]) > int(b["score"]))
 	
+	# Trim to max entries AFTER sorting
+	if leaderboard_data.size() > MAX_ENTRIES:
+		leaderboard_data = leaderboard_data.slice(0, MAX_ENTRIES)

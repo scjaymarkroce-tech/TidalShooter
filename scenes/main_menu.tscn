@@ -1,23 +1,61 @@
-[gd_scene load_steps=7 format=3 uid="uid://c17pkimncu6h7"]
+[gd_scene load_steps=15 format=3 uid="uid://c17pkimncu6h7"]
 
 [ext_resource type="Script" uid="uid://dul10smti6jqg" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://b5agauk2t143m" path="res://ADDED/TOPDOWN_POSTER.png" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://dpa600rittfrv" path="res://ADDED/Gemini_Generated_Image_v1m4rmv1m4rmv1m4.png" id="2_8ln24"]
+[ext_resource type="Texture2D" uid="uid://bkw0tyuw13wbq" path="res://ADDED/door.png" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://cyerytjxolo5" path="res://ADDED/main menu path.png" id="3_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://dg027jvkgksqu" path="res://ADDED/craiyon_132026_image.png" id="5_8ln24"]
+[ext_resource type="Texture2D" uid="uid://b6vqi7cp8kkyu" path="res://ADDED/container.png" id="7_jk1qb"]
+[ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="7_oa1go"]
+[ext_resource type="Texture2D" uid="uid://nrjcngyfwa4d" path="res://ADDED/clouds.png" id="7_tbmy8"]
 
-[sub_resource type="Animation" id="Animation_bqqt6"]
-length = 0.001
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu84c"]
+atlas = ExtResource("3_bqqt6")
+region = Rect2(59, 0, 298, 697)
 
-[sub_resource type="Animation" id="Animation_ekxnf"]
-resource_name = "poster_pulse"
-length = 3.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqqt6"]
+atlas = ExtResource("3_bqqt6")
+region = Rect2(59, 0, 298, 697)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wu84c"]
-_data = {
-&"RESET": SubResource("Animation_bqqt6"),
-&"poster_pulse": SubResource("Animation_ekxnf")
-}
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
+atlas = ExtResource("3_bqqt6")
+region = Rect2(357, 0, 298, 697)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekxnf"]
-bg_color = Color(0.878431, 0.74902, 0.478431, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtw2f"]
+atlas = ExtResource("3_bqqt6")
+region = Rect2(655, 0, 298, 697)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa1go"]
+atlas = ExtResource("3_bqqt6")
+region = Rect2(953, 0, 298, 697)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ln24"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu84c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqqt6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ln24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtw2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa1go")
+}],
+"loop": false,
+"name": &"open",
+"speed": 4.0
+}]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -28,38 +66,129 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_wu84c")
-}
+[node name="bg" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(1.99999, 4)
+scale = Vector2(0.876894, 1.55208)
+texture = ExtResource("2_8ln24")
+centered = false
+region_enabled = true
+region_rect = Rect2(-0.0154419, 3.92305, 1579.83, 668.8)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="path" type="Sprite2D" parent="."]
+position = Vector2(84, 48)
+scale = Vector2(0.946875, 1.83241)
+texture = ExtResource("3_rtw2f")
+centered = false
+
+[node name="CloudTemplate" type="Sprite2D" parent="."]
+position = Vector2(1775, 67)
+scale = Vector2(0.548828, 0.494475)
+texture = ExtResource("7_tbmy8")
+
+[node name="Door" type="AnimatedSprite2D" parent="."]
+position = Vector2(694, 222)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_8ln24")
+animation = &"open"
+frame = 3
+frame_progress = 1.0
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(688, 174)
+scale = Vector2(0.468841, 0.459441)
+texture = ExtResource("5_8ln24")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 943.0
+offset_top = 624.0
+offset_right = 1266.0
+offset_bottom = 692.0
+text = "START"
+
+[node name="LeaderboardButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 939.0
+offset_top = 489.0
+offset_right = 1262.0
+offset_bottom = 557.0
+text = "Leaderboards"
+
+[node name="InstructionsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 482.0
+offset_right = 421.0
+offset_bottom = 550.0
+text = "Instructions"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 616.0
+offset_right = 423.0
+offset_bottom = 684.0
+text = "QUIT"
+
+[node name="PopupRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 6.0
+offset_right = -112.0
+offset_bottom = -65.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ekxnf")
+texture = ExtResource("7_jk1qb")
+expand_mode = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2, 21)
-scale = Vector2(0.987926, 1)
-texture = ExtResource("2_ekxnf")
-centered = false
+[node name="PopupTitle" type="Label" parent="PopupRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.0
+offset_top = 196.0
+offset_right = 266.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.459061, 0.252076, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("7_oa1go")
+theme_override_font_sizes/font_size = 50
+text = "Leaderboards"
 
-[node name="StartButton" type="Button" parent="."]
+[node name="PopupContent" type="RichTextLabel" parent="PopupRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -259.0
+offset_top = -74.5
+offset_right = 345.0
+offset_bottom = 143.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.344647, 0.178619, 0.00445787, 0.807843)
+theme_override_fonts/normal_font = ExtResource("7_oa1go")
+theme_override_font_sizes/normal_font_size = 30
+text = "nhihihihihi"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="PopupRect"]
 layout_mode = 0
-offset_left = 907.0
-offset_top = 675.0
-offset_right = 1230.0
-offset_bottom = 743.0
-text = "START"
-
-[node name="QuitButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 105.0
-offset_top = 658.0
-offset_right = 428.0
-offset_bottom = 726.0
-text = "QUIT"
+offset_left = 1044.0
+offset_top = 171.0
+offset_right = 1151.0
+offset_bottom = 211.0
+text = "Close"
