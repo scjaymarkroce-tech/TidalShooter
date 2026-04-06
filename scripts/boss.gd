@@ -15,7 +15,6 @@ var phase: int = 1 # Track which phase the boss is in
 var speed: int = 70     # slower than normal enemies
 var alive := true
 
-
 const DROP_CHANCE : float = 1.0  # boss always drops something
 
 var direction := Vector2.ZERO
@@ -56,6 +55,11 @@ func _physics_process(_delta: float) -> void:
 	if is_dashing:
 		velocity = dash_direction * dash_speed
 		move_and_slide()
+		
+		# ✨ DRAMATIC GHOST TRAIL: Spawn a ghost every 3 frames
+		if Engine.get_physics_frames() % 3 == 0:
+			create_dash_ghost()
+			
 		return
 
 	# 🧠 NORMAL CHASE
@@ -70,6 +74,7 @@ func _physics_process(_delta: float) -> void:
 	if can_dash and can_use_abilities and not is_dashing:
 		start_dash_attack()
 
+
 func start_dash_attack():
 	can_dash = false
 	
@@ -78,6 +83,7 @@ func start_dash_attack():
 	
 	show_dash_line()
 	$DashTimer.start()
+
 
 func show_dash_line():
 	if not dash_line:
@@ -112,6 +118,7 @@ func show_dash_line():
 	# (In phase 2, it will appear even thicker due to the 5x boss scale)
 	tween.tween_property(dash_line, "width", 7.0, $DashTimer.wait_time)
 	
+
 func take_damage(amount: int) -> void:
 	if not alive:
 		return
@@ -226,3 +233,27 @@ func _on_DashTimer_timeout() -> void:
 	$AnimatedSprite2D.play("run")
 
 	$DashCooldownTimer.start()
+
+
+# ✨ DRAMATIC DASH EFFECTS ✨
+func create_dash_ghost():
+	var ghost = Sprite2D.new()
+	# Grab the exact frame of animation the boss is currently in
+	var current_frame = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
+	ghost.texture = current_frame
+	ghost.global_position = global_position
+	
+	# Match the boss's size and direction
+	ghost.scale = scale * $AnimatedSprite2D.scale 
+	ghost.flip_h = $AnimatedSprite2D.flip_h
+	
+	# Give it a badass glowing red tint
+	ghost.modulate = Color(1.0, 0.2, 0.2, 0.6) 
+	
+	# Add it to the world behind the boss
+	main.add_child(ghost)
+	
+	# Make it quickly fade away and delete itself
+	var tween = create_tween()
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) # Fade to invisible over 0.3s
+	tween.tween_callback(ghost.queue_free)

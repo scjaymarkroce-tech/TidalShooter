@@ -64,6 +64,11 @@ func _physics_process(_delta: float) -> void:
 	if is_dashing:
 		velocity = dash_direction * dash_speed
 		move_and_slide()
+		
+		# ✨ DRAMATIC GHOST TRAIL: Spawn a ghost every 3 frames
+		if Engine.get_physics_frames() % 3 == 0:
+			create_dash_ghost()
+			
 		return
 
 	# NORMAL CHASE
@@ -247,3 +252,27 @@ func drop_item() -> void:
 	item.item_type = randi_range(0, 2)
 	main.call_deferred("add_child", item)
 	item.add_to_group("items")
+
+
+# ✨ DRAMATIC DASH EFFECTS ✨
+func create_dash_ghost():
+	var ghost = Sprite2D.new()
+	# Grab the exact frame of animation the boss is currently in
+	var current_frame = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
+	ghost.texture = current_frame
+	ghost.global_position = global_position
+	
+	# Match the boss's size and direction
+	ghost.scale = scale * $AnimatedSprite2D.scale 
+	ghost.flip_h = $AnimatedSprite2D.flip_h
+	
+	# Give it a badass glowing red tint
+	ghost.modulate = Color(1.0, 0.2, 0.2, 0.6) 
+	
+	# Add it to the world behind the boss
+	main.add_child(ghost)
+	
+	# Make it quickly fade away and delete itself
+	var tween = create_tween()
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) # Fade to invisible over 0.3s
+	tween.tween_callback(ghost.queue_free)

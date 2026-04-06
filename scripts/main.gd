@@ -160,3 +160,17 @@ func update_background():
 		bg1.visible = false
 		bg2.visible = false
 		bg3.visible = true
+		
+
+# ⏭️ CHEAT CODE: Press '0' to instantly kill all enemies and advance the wave!
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_0:
+		# Nuke all normal enemies
+		for enemy in get_tree().get_nodes_in_group("enemies"):
+			if enemy.alive and enemy.has_method("take_damage"):
+				enemy.take_damage(9999) # Instant death
+				
+		# Nuke all bosses
+		for boss in get_tree().get_nodes_in_group("bosses"):
+			if boss.alive and boss.has_method("take_damage"):
+				boss.take_damage(9999) # Instant death
