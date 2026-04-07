@@ -206,7 +206,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().paused = false 
 		
 		# Set the wave directly to 5
-		wave = 21
+		wave = 5
 		
 		# Force the game to reset and immediately load the new wave
 		reset()

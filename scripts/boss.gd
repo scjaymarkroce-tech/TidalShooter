@@ -251,6 +251,11 @@ func show_dash_line():
 	tween.tween_property(dash_line, "width", 7.0, $DashTimer.wait_time)
 
 func take_damage(amount: int) -> void:
+	
+	# ✨ SPAWN THE DAMAGE NUMBER!
+	DamageNumbers.show_damage(amount, global_position)
+	
+	
 	if not alive or is_transitioning: return
 
 	health -= amount

@@ -145,6 +145,11 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		hit_player.emit()
 
 func take_damage(amount: int) -> void:
+	
+	# ✨ SPAWN THE DAMAGE NUMBER!
+	DamageNumbers.show_damage(amount, global_position)
+	
+	
 	# Ignore damage if underground!
 	if not alive or current_state == State.UNDERGROUND: return
 

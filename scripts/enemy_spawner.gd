@@ -58,7 +58,7 @@ func _on_timer_timeout() -> void:
 			enemy = boss_frog_scene.instantiate()
 		
 		var boss_level = int(main_node.wave / 5)
-		enemy.health = 450 + (boss_level - 1) * 50
+		enemy.health = 50 + (boss_level - 1) * 50
 		enemy.add_to_group("bosses")
 		
 		# 🎬 THE FIX: Pause all other spawns for 2 seconds while the boss intro plays!

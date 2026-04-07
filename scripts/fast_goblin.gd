@@ -80,6 +80,11 @@ func _on_area_2d_body_entered(_body: Node2D) -> void:
 	hit_player.emit()
 
 func take_damage(amount):
+	
+	# ✨ SPAWN THE DAMAGE NUMBER!
+	DamageNumbers.show_damage(amount, global_position)
+	
+	
 	if not alive:
 		return
 		

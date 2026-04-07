@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 upgrade_manager="*res://scripts/upgrade_manager.gd"
 ScoreManager="*res://scripts/ScoreManager.gd"
 LeaderboardManager="*res://scripts/LeaderboardManager.gd"
+DamageNumbers="*res://scripts/damage_numbers.gd"
+ScreenShake="*res://scripts/screen_shake.gd"
 
 [display]
 

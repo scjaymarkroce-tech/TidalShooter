@@ -288,6 +288,9 @@ func _on_dash_timer_timeout() -> void:
 
 # --- HEALTH & PHASES ---
 func take_damage(amount: int) -> void:
+	# ✨ SPAWN THE DAMAGE NUMBER!
+	DamageNumbers.show_damage(amount, global_position)
+	
 	if not alive or is_transitioning: return
 
 	health -= amount

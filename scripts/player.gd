@@ -1,7 +1,4 @@
 extends CharacterBody2D
-#NOTE!
-#we will stop using the var reloading_weapon and $ReloadTimer
-
 
 var speed : int 
 var screen_size : Vector2
@@ -11,32 +8,29 @@ const BOOST_SPEED : int = 400
 const NORMAL_SHOT : float = 0.5
 const FAST_SHOT : float = 0.1
 
-#my own modification starts
 # Weapon system
-var current_weapon : int = 1  # 1 = pistol, 2 = shotgun, 3 = rifle
+var current_weapon : int = 1  
 
-# Pistol stats (Level 1 from your table)
+# Pistol stats
 var pistol_damage := 10
 var pistol_cooldown := 0.5
 
-# Shotgun (Level 1)
+# Shotgun stats
 var shotgun_damage := 15
 var shotgun_cooldown := 1.2
 var shotgun_pellets := 5
-var shotgun_spread := 0.3  # radians (adjust later)
+var shotgun_spread := 0.3  
 
-# Rifle (Level 1)
-var rifle_damage := 100 #25 by default
+# Rifle stats
+var rifle_damage := 100 
 var rifle_cooldown := 1.2
-
-#========= BASE STATS ============
 
 # Current ammo in magazine
 var current_ammo := {
 	1: 12,  # Pistol
 	2: 10,  # Shotgun
 	3: 3,   # Rifle
-	4: -1   # Flamethrower (no ammo system)
+	4: -1   # Flamethrower
 }
 
 # Max magazine size
@@ -52,10 +46,9 @@ var reload_time := {
 	1: 3.0,
 	2: 4.0,
 	3: 7.0,
-	4: 0.0  # Flamethrower does NOT use reload
+	4: 0.0  
 }
 
-# Reloading state
 var is_reloading := {
 	1: false,
 	2: false,
@@ -64,18 +57,18 @@ var is_reloading := {
 }
 
 var reloading_weapon : int = 0
+
 # Flamethrower
 var has_flamethrower := false
 var flamethrower_active := false
 var flamethrower_duration := 7.0
 var flamethrower_cooldown := 2.0
 var flamethrower_damage := 20
-var flamethrower_tick_rate := 0.1  # 0.1 sec = 10 ticks/sec (feels better than 1/sec)
-var flamethrower_pending_remove := false    # True for the first wave after using it
-var flamethrower_used_this_wave := false    # Internal: true if used this wave
+var flamethrower_tick_rate := 0.1  
+var flamethrower_pending_remove := false    
+var flamethrower_used_this_wave := false    
 
 signal shoot(pos, dir, damage, is_flame, weapon_type)
-
 
 # DODGE SYSTEM
 var can_dodge := true
@@ -84,14 +77,12 @@ var dodge_speed := 500
 var dodge_direction := Vector2.ZERO
 var is_invulnerable := false
 
-# ✨ PERFECT DODGE SYSTEM
+# PERFECT DODGE SYSTEM
 var has_perfect_dodged := false
-var perfect_dodge_distance := 60.0 # How close you must be to trigger the slow-mo
-
+var perfect_dodge_distance := 60.0 
 
 # HUD INTEGRATION
-@onready var hud = get_node("/root/Main/Hud")  # adjust if needed!
-
+@onready var hud = get_node("/root/Main/Hud")  
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -112,7 +103,7 @@ func reset():
 		is_reloading[key] = false
 		current_ammo[key] = max_ammo[key]
 	apply_weapon_stats()
-	# --- HUD UPDATES ---
+	
 	hud.update_gun_icon(current_weapon)
 	hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 	hud.show_reload(false)
@@ -124,7 +115,6 @@ func apply_weapon_stats():
 		2: $ShotTimer.wait_time = shotgun_cooldown
 		3: $ShotTimer.wait_time = rifle_cooldown
 
-
 func get_input():
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 
@@ -134,7 +124,7 @@ func get_input():
 		hud.update_gun_icon(current_weapon)
 		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 		
-		# 🎵 MUSIC LOGIC: Switch to Flame BGM (only if it's NOT a boss wave!)
+		# 🎵 MUSIC LOGIC: Switch to Flame BGM
 		var main_node = get_node("/root/Main")
 		if main_node.wave % 5 != 0: 
 			if main_node.has_node("MainBGM"): main_node.get_node("MainBGM").stop()
@@ -170,7 +160,7 @@ func get_input():
 	else:
 		velocity = input_dir.normalized() * speed
 
-		# Firing
+	# Firing
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_shoot:
 		var dir = (get_global_mouse_position() - position).normalized()
 		if not is_reloading[current_weapon]:
@@ -179,6 +169,7 @@ func get_input():
 					hud.show_reload(false)
 					if current_ammo[1] > 0:
 						if has_node("PistolSound"): $PistolSound.play()
+						ScreenShake.shake(3.0, 0.1) # ✨ PISTOL SHAKE
 						shoot.emit(position, dir, pistol_damage, false, 1)
 						current_ammo[1] -= 1
 						hud.update_ammo(current_ammo[1], max_ammo[1])
@@ -188,6 +179,7 @@ func get_input():
 					hud.show_reload(false)
 					if current_ammo[2] > 0:
 						if has_node("ShotgunSound"): $ShotgunSound.play()
+						ScreenShake.shake(15.0, 0.25) # ✨ SHOTGUN SHAKE (HEAVY)
 						shoot_shotgun(dir)
 						current_ammo[2] -= 5
 						hud.update_ammo(current_ammo[2], max_ammo[2])
@@ -197,6 +189,7 @@ func get_input():
 					hud.show_reload(false)
 					if current_ammo[3] > 0:
 						if has_node("RifleSound"): $RifleSound.play()
+						ScreenShake.shake(10.0, 0.15) # ✨ RIFLE SHAKE (SHARP)
 						shoot.emit(position, dir, rifle_damage, false, 3)
 						current_ammo[3] -= 1
 						hud.update_ammo(current_ammo[3], max_ammo[3])
@@ -207,53 +200,46 @@ func get_input():
 		can_shoot = false
 		$ShotTimer.start()
 
-func _reset_to_normal_music():
-	var main_node = get_node("/root/Main")
-	if main_node.has_node("FlameBGM") and main_node.get_node("FlameBGM").playing:
-		main_node.get_node("FlameBGM").stop()
-		# Only resume the MainBGM. (If it's a Boss wave, we wouldn't have stopped the BossBGM anyway!)
-		if main_node.wave % 5 != 0 and main_node.has_node("MainBGM"):
-			main_node.get_node("MainBGM").play()
-			
-		
 func shoot_shotgun(base_dir: Vector2):
 	for i in shotgun_pellets:
 		var spread = randf_range(-shotgun_spread, shotgun_spread)
 		var new_dir = base_dir.rotated(spread)
 		shoot.emit(position, new_dir, shotgun_damage, false, 2)
-		
+
 func reload_weapon(weapon_id: int):
-	if is_reloading[weapon_id]:
-		return
+	if is_reloading[weapon_id]: return
 	is_reloading[weapon_id] = true
 	hud.show_reload(true, 0)
 	var elapsed: float = 0.0
 	var total: float = reload_time[weapon_id]
 	
 	while elapsed < total:
-		# 🐛 FIX: Stop reloading if the player died or left the scene!
 		if not is_inside_tree(): return 
-		
 		await get_tree().process_frame
 		elapsed += get_process_delta_time()
-		
 		if current_weapon == weapon_id:
 			hud.show_reload(true, elapsed / total)
 		else:
 			hud.show_reload(false)
 			
 	if elapsed < total: 
-		if not is_inside_tree(): return # 🐛 FIX
+		if not is_inside_tree(): return 
 		await get_tree().create_timer(total - elapsed).timeout
 		
 	current_ammo[weapon_id] = max_ammo[weapon_id]
 	is_reloading[weapon_id] = false
 	hud.show_reload(false)
 	hud.update_ammo(current_ammo[weapon_id], max_ammo[weapon_id])
-	
-	
-#	THIS IS THE LOGIC FOR OUR SPECIAL WEAPON =======================================
-# SPECIAL: Flamethrower
+
+# 🎵 MUSIC RESET HELPER
+func _reset_to_normal_music():
+	var main_node = get_node("/root/Main")
+	if main_node.has_node("FlameBGM") and main_node.get_node("FlameBGM").playing:
+		main_node.get_node("FlameBGM").stop()
+		if main_node.wave % 5 != 0 and main_node.has_node("MainBGM"):
+			main_node.get_node("MainBGM").play()
+
+# FLAMETHROWER
 func start_flamethrower():
 	hud.show_reload(false)
 	hud.update_ammo(0, 0)
@@ -265,15 +251,16 @@ func start_flamethrower():
 	fire_flamethrower()
 
 func fire_flamethrower():
-	var main = get_node("/root/Main")
-	
-	# 🔊 Start the flamethrower sound effect
 	if has_node("FlameSound"): $FlameSound.play()
 
 	var time_passed := 0.0
 	while time_passed < flamethrower_duration:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			break
+			
+		# ✨ CONSTANT RUMBLE WHILE FIRING
+		ScreenShake.shake(2.0, 0.1) 
+		
 		var base_dir = (get_global_mouse_position() - position).normalized()
 		var spread_dir = base_dir.rotated(randf_range(-0.2, 0.2))
 		shoot.emit(position, spread_dir, flamethrower_damage, true, 4)
@@ -281,10 +268,8 @@ func fire_flamethrower():
 		await get_tree().create_timer(flamethrower_tick_rate).timeout
 		time_passed += flamethrower_tick_rate
 	
-	# 🛑 Flamethrower is done! Stop firing sound.
 	if has_node("FlameSound"): $FlameSound.stop()
 	
-	# If the ammo is empty, forcefully switch back to Pistol and restore normal music!
 	current_weapon = 1
 	_reset_to_normal_music()
 	apply_weapon_stats()
@@ -293,22 +278,18 @@ func fire_flamethrower():
 
 	await get_tree().create_timer(flamethrower_cooldown).timeout
 	flamethrower_active = false
+
 func validate_weapon():
 	if current_weapon == 4 and not has_flamethrower:
 		current_weapon = 1
 		apply_weapon_stats()
 
-
-# =====================================================================================
 # DODGE MECHANIC
 func start_dodge(input_dir: Vector2):
-	if input_dir == Vector2.ZERO:
-		return
+	if input_dir == Vector2.ZERO: return
 	
 	has_perfect_dodged = false 
-	dodge_speed = 500 # Reset dodge speed to normal
-	
-	# 🌾 GREEN/YELLOW: Turn slightly yellow-green during dodge
+	dodge_speed = 500 
 	modulate = Color(0.8, 1.0, 0.4, 0.8) 
 	
 	can_dodge = false
@@ -318,27 +299,23 @@ func start_dodge(input_dir: Vector2):
 	$DodgeTimer.start()
 	$DodgeCooldownTimer.start()
 
-
 func _on_dodge_timer_timeout():
 	is_dodging = false
 	is_invulnerable = false
-	dodge_speed = 500 # Reset speed back to normal
+	dodge_speed = 500 
 	modulate = Color(1, 1, 1, 1)
 
 func _on_dodge_cooldown_timer_timeout():
 	can_dodge = true
-
 
 func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
-	# ✨ 1. DODGE GHOST TRAILS
 	if is_dodging and Engine.get_physics_frames() % 3 == 0:
 		create_dodge_ghost()
 		
-	# ✨ 2. PERFECT DODGE CHECK (Are we phasing through an enemy?)
 	if is_dodging and not has_perfect_dodged:
 		check_perfect_dodge()
 
@@ -353,16 +330,12 @@ func _physics_process(_delta: float) -> void:
 		$AnimatedSprite2D.stop()
 		$AnimatedSprite2D.frame = 1
 
-
-# ✨ NEW: VISUAL GHOST TRAIL
 func create_dodge_ghost():
 	var ghost = Sprite2D.new()
 	var current_frame = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, $AnimatedSprite2D.frame)
 	ghost.texture = current_frame
 	ghost.global_position = global_position
 	ghost.scale = scale * $AnimatedSprite2D.scale 
-	
-	# 🌾 GREEN/YELLOW neon trail
 	ghost.modulate = Color(0.6, 1.0, 0.2, 0.6) 
 	get_parent().add_child(ghost)
 	
@@ -370,7 +343,6 @@ func create_dodge_ghost():
 	tween.tween_property(ghost, "modulate:a", 0.0, 0.3) 
 	tween.tween_callback(ghost.queue_free)
 
-# ✨ NEW: PERFECT DODGE DETECTION & SLOW-MO
 func check_perfect_dodge():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var bosses = get_tree().get_nodes_in_group("bosses")
@@ -379,38 +351,31 @@ func check_perfect_dodge():
 	for enemy in all_enemies:
 		if enemy.alive and global_position.distance_to(enemy.global_position) < perfect_dodge_distance:
 			trigger_perfect_dodge()
-			return # Stop checking, we already dodged successfully
+			return 
 
 func trigger_perfect_dodge():
 	has_perfect_dodged = true
 	
-	# 🔊 Play the super satisfying perfect dodge sound!
 	if has_node("PerfectDodgeSound"):
 		$PerfectDodgeSound.play()
-		
-	# ⚡ REWARD: Make this specific dash 15% longer/faster!
-	dodge_speed *= 1.15 
 	
-	# 1. Slow down time drastically (WITCH TIME!)
+	dodge_speed *= 1.15 
 	Engine.time_scale = 0.2
 	
-	# 2. Flash the screen slightly yellow-green 🌾
 	var flash = ColorRect.new()
 	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
 	flash.color = Color(0.6, 1.0, 0.2, 0.2)
 	get_node("/root/Main").add_child(flash)
 	
-	# 3. Create floating "PERFECT DODGE" Text
 	var text = Label.new()
 	text.text = "PERFECT DODGE!"
-	text.modulate = Color(0.8, 1.0, 0.2, 1.0) # 🌾 Bright yellow-green text
+	text.modulate = Color(0.8, 1.0, 0.2, 1.0) 
 	text.add_theme_font_size_override("font_size", 30)
 	text.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	text.add_theme_constant_override("outline_size", 4)
 	text.global_position = global_position + Vector2(-80, -50)
 	get_parent().add_child(text)
 	
-	# 4. Animate it all! (Note: Tweens need to ignore time_scale during slow-mo)
 	var tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
@@ -424,7 +389,6 @@ func trigger_perfect_dodge():
 	await get_tree().create_timer(0.5, true, false, true).timeout 
 	Engine.time_scale = 1.0
 
-# --- WEAPON TIMERS ---
 func boost():
 	$BoostTimer.start()
 	speed = BOOST_SPEED
