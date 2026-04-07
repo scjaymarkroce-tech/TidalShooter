@@ -238,27 +238,18 @@ Fullscreen Target
 - ✔	invulnerability frames 
 - ✔	dash cooldown system 
 
-7.	❌ Scoring System — NOT DONE
+7.	Scoring System 
 - ✔	score tracking
-  
-- ❌ missing:
-  - •	combo multiplier 
-  - •	timer reset system 
 
-8.	⚠️ Wave System — BASIC VERSION ONLY
+8.	Wave System
 - ✔ wave increment
 - ✔ enemy clearing check
-  
-- ❌ missing: (WE HAVE THIS BUT I THINK IT IS NOT FULLY CHECKED YET)
-  - •	exact scaling table implementation 
-  - •	boss spawn logic 
-  - •	max enemy cap enforcement 
+- ✔	exact scaling table implementation 
+- ✔	boss spawn logic 
+- ✔	max enemy cap enforcement 
 
-9.	❌ UI / HUD — MINIMAL
+9.	UI / HUD 
 - ✔ wave / lives display
 - ✔	score display
 - ✔	upgrade menu
-- ❌ missing:
-  - •	combo UI 
-  - •	proper pause menu 
-  - • ui design still looks so bad
+- ✔ proper pause menu 
