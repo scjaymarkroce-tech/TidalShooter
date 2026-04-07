@@ -10,8 +10,18 @@ var upgrade_manager = UpgradeManager.new()
 
 var is_animating := false 
 
+# 🔊 SOUND VARIABLE
+var yeyy_sound_player: AudioStreamPlayer
+
 func _ready():
 	visible = false
+	
+	# --- 🔊 SETUP YEYY SOUND DYNAMICALLY ---
+	yeyy_sound_player = AudioStreamPlayer.new()
+	yeyy_sound_player.stream = load("res://ADDED/A_MUSIC/yeyy.mp3")
+	# MUST be ALWAYS so it plays while the game is paused!
+	yeyy_sound_player.process_mode = Node.PROCESS_MODE_ALWAYS 
+	add_child(yeyy_sound_player)
 	
 	# Grab the EXACT positions you set in the editor so we can return to them safely
 	cards = [
@@ -45,6 +55,12 @@ func open_menu():
 	get_tree().paused = true
 	visible = true
 	player.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	# 🎵 UPGRADE MUSIC LOGIC: Stop battle music, play upgrade music
+	var main_node = get_parent()
+	if main_node.has_node("MainBGM"): main_node.get_node("MainBGM").stop()
+	if main_node.has_node("BossBGM"): main_node.get_node("BossBGM").stop()
+	if main_node.has_node("UpgradeBGM"): main_node.get_node("UpgradeBGM").play()
 	
 	# Fetch Upgrade Options
 	options = upgrade_manager.get_upgrade_options()
@@ -116,6 +132,10 @@ func _finish_upgrade(idx: int):
 	if is_animating: return
 	is_animating = true
 	
+	# 🔊 PLAY THE "YEYY" SOUND EFFECT HERE!
+	if yeyy_sound_player:
+		yeyy_sound_player.play()
+	
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
 	# 🎬 CINEMATIC OUTRO
@@ -156,6 +176,10 @@ func _finish_upgrade(idx: int):
 	upgrade_manager.apply_upgrade(choice, player)
 	
 	_reset_ui_to_base_values()
+	
+	# 🎵 Stop the upgrade music (The reset() function will automatically start the next wave's music)
+	if get_parent().has_node("UpgradeBGM"): 
+		get_parent().get_node("UpgradeBGM").stop()
 	
 	player.process_mode = Node.PROCESS_MODE_INHERIT
 	visible = false

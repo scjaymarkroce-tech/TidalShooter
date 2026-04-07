@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://b2qwnmoo8mi2b"]
+[gd_scene load_steps=113 format=3 uid="uid://b2qwnmoo8mi2b"]
 
 [ext_resource type="Script" uid="uid://dk06tnidr3uaf" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="Texture2D" uid="uid://brv8jomggjah5" path="res://ADDED/AA/Fox_Plain_Walk_dir6.png" id="2_ur7pv"]
@@ -9,6 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://cpxmhqbctjrw4" path="res://ADDED/AA/Fox_Plain_Walk_dir3.png" id="7_f1ej7"]
 [ext_resource type="Texture2D" uid="uid://bslt2agxpw6d7" path="res://ADDED/AA/Fox_Plain_Walk_dir4.png" id="8_oprun"]
 [ext_resource type="Texture2D" uid="uid://bfg7rkhbeo5c" path="res://ADDED/AA/Fox_Plain_Walk_dir5.png" id="9_a8ls1"]
+[ext_resource type="AudioStream" uid="uid://dif22y23by2kt" path="res://ADDED/A_MUSIC/pistolsound.mp3" id="10_f1ej7"]
+[ext_resource type="AudioStream" uid="uid://rpgc7487e45g" path="res://ADDED/A_MUSIC/shotgun_sound.mp3" id="11_oprun"]
+[ext_resource type="AudioStream" uid="uid://pp1lqh1rjqpj" path="res://ADDED/A_MUSIC/snipersound.mp3" id="12_a8ls1"]
+[ext_resource type="AudioStream" uid="uid://dh1y458fajv3i" path="res://ADDED/A_MUSIC/flamethrowersound.mp3" id="13_qfm1y"]
+[ext_resource type="AudioStream" uid="uid://di3y0vrj08eek" path="res://ADDED/A_MUSIC/perpectdodge.mp3" id="14_fulsm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
 atlas = ExtResource("2_ur7pv")
@@ -765,6 +770,28 @@ one_shot = true
 [node name="DodgeCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="PistolSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_f1ej7")
+volume_db = -15.0
+
+[node name="ShotgunSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_oprun")
+volume_db = -15.0
+
+[node name="RifleSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_a8ls1")
+volume_db = -12.0
+
+[node name="FlameSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_qfm1y")
+volume_db = -7.0
+parameters/looping = true
+
+[node name="PerfectDodgeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_fulsm")
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="."]
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]

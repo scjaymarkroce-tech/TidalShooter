@@ -133,19 +133,28 @@ func get_input():
 		current_weapon = 4
 		hud.update_gun_icon(current_weapon)
 		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
+		
+		# 🎵 MUSIC LOGIC: Switch to Flame BGM (only if it's NOT a boss wave!)
+		var main_node = get_node("/root/Main")
+		if main_node.wave % 5 != 0: 
+			if main_node.has_node("MainBGM"): main_node.get_node("MainBGM").stop()
+			if main_node.has_node("FlameBGM"): main_node.get_node("FlameBGM").play()
 
 	if Input.is_key_pressed(KEY_1):
 		current_weapon = 1
+		_reset_to_normal_music()
 		apply_weapon_stats()
 		hud.update_gun_icon(current_weapon)
 		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 	elif Input.is_key_pressed(KEY_2):
 		current_weapon = 2
+		_reset_to_normal_music()
 		apply_weapon_stats()
 		hud.update_gun_icon(current_weapon)
 		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
 	elif Input.is_key_pressed(KEY_3):
 		current_weapon = 3
+		_reset_to_normal_music()
 		apply_weapon_stats()
 		hud.update_gun_icon(current_weapon)
 		hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
@@ -161,7 +170,7 @@ func get_input():
 	else:
 		velocity = input_dir.normalized() * speed
 
-	# Firing
+		# Firing
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_shoot:
 		var dir = (get_global_mouse_position() - position).normalized()
 		if not is_reloading[current_weapon]:
@@ -169,6 +178,7 @@ func get_input():
 				1:
 					hud.show_reload(false)
 					if current_ammo[1] > 0:
+						if has_node("PistolSound"): $PistolSound.play()
 						shoot.emit(position, dir, pistol_damage, false, 1)
 						current_ammo[1] -= 1
 						hud.update_ammo(current_ammo[1], max_ammo[1])
@@ -177,6 +187,7 @@ func get_input():
 				2:
 					hud.show_reload(false)
 					if current_ammo[2] > 0:
+						if has_node("ShotgunSound"): $ShotgunSound.play()
 						shoot_shotgun(dir)
 						current_ammo[2] -= 5
 						hud.update_ammo(current_ammo[2], max_ammo[2])
@@ -185,6 +196,7 @@ func get_input():
 				3:
 					hud.show_reload(false)
 					if current_ammo[3] > 0:
+						if has_node("RifleSound"): $RifleSound.play()
 						shoot.emit(position, dir, rifle_damage, false, 3)
 						current_ammo[3] -= 1
 						hud.update_ammo(current_ammo[3], max_ammo[3])
@@ -195,6 +207,14 @@ func get_input():
 		can_shoot = false
 		$ShotTimer.start()
 
+func _reset_to_normal_music():
+	var main_node = get_node("/root/Main")
+	if main_node.has_node("FlameBGM") and main_node.get_node("FlameBGM").playing:
+		main_node.get_node("FlameBGM").stop()
+		# Only resume the MainBGM. (If it's a Boss wave, we wouldn't have stopped the BossBGM anyway!)
+		if main_node.wave % 5 != 0 and main_node.has_node("MainBGM"):
+			main_node.get_node("MainBGM").play()
+			
 		
 func shoot_shotgun(base_dir: Vector2):
 	for i in shotgun_pellets:
@@ -245,6 +265,11 @@ func start_flamethrower():
 	fire_flamethrower()
 
 func fire_flamethrower():
+	var main = get_node("/root/Main")
+	
+	# 🔊 Start the flamethrower sound effect
+	if has_node("FlameSound"): $FlameSound.play()
+
 	var time_passed := 0.0
 	while time_passed < flamethrower_duration:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -252,11 +277,22 @@ func fire_flamethrower():
 		var base_dir = (get_global_mouse_position() - position).normalized()
 		var spread_dir = base_dir.rotated(randf_range(-0.2, 0.2))
 		shoot.emit(position, spread_dir, flamethrower_damage, true, 4)
+		
 		await get_tree().create_timer(flamethrower_tick_rate).timeout
 		time_passed += flamethrower_tick_rate
+	
+	# 🛑 Flamethrower is done! Stop firing sound.
+	if has_node("FlameSound"): $FlameSound.stop()
+	
+	# If the ammo is empty, forcefully switch back to Pistol and restore normal music!
+	current_weapon = 1
+	_reset_to_normal_music()
+	apply_weapon_stats()
+	hud.update_gun_icon(current_weapon)
+	hud.update_ammo(current_ammo[current_weapon], max_ammo[current_weapon])
+
 	await get_tree().create_timer(flamethrower_cooldown).timeout
 	flamethrower_active = false
-
 func validate_weapon():
 	if current_weapon == 4 and not has_flamethrower:
 		current_weapon = 1
@@ -348,6 +384,10 @@ func check_perfect_dodge():
 func trigger_perfect_dodge():
 	has_perfect_dodged = true
 	
+	# 🔊 Play the super satisfying perfect dodge sound!
+	if has_node("PerfectDodgeSound"):
+		$PerfectDodgeSound.play()
+		
 	# ⚡ REWARD: Make this specific dash 15% longer/faster!
 	dodge_speed *= 1.15 
 	

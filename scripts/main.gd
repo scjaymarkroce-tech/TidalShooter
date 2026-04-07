@@ -50,9 +50,7 @@ func _process(_delta):
 			$WaveOverTimer.start()
 
 func reset():
-	wave_in_transition = false  # Allow next wave checks
-	
-	# ✨ UPDATE BACKGROUND FOR THE CURRENT WAVE
+	wave_in_transition = false  
 	update_background()
 	
 	var stats = get_enemy_stats()
@@ -63,32 +61,52 @@ func reset():
 	get_tree().call_group("bullets", "queue_free")
 	get_tree().call_group("items", "queue_free")
 	get_tree().call_group("swamps", "queue_free")
+	get_tree().call_group("bosses", "queue_free") 
+	
 	$Hud/LivesLabel.text = "X " + str(lives)
 	$Hud/WaveLabel.text = "WAVE: " + str(wave)
 	$Hud/EnemiesLabel.text = "X " + str(max_enemies)
 	$GameOver.hide()
+	
+		# 🎵 BGM LOGIC: Switch between Main and Boss music
+	if has_node("MainBGM") and has_node("BossBGM"):
+		$MainBGM.stop()
+		$BossBGM.stop()
+		$BossBGM.pitch_scale = 1.0 # Reset pitch in case we just finished a Phase 2 boss
+		
+		# Only play the Main BGM automatically. 
+		# The Boss scripts will trigger the BossBGM manually when their warning ends!
+		if wave % 5 != 0:
+			$MainBGM.play()
+	
+	# Pause the game and wait for the restart timer
 	get_tree().paused = true
 	$RestartTimer.start()
-	
-	
-#ENEMY FOCUS ============================================================================================
+		
+		
 #ENEMY FOCUS ============================================================================================
 func _on_enemy_spawner_hit_p() -> void:
-	# 🛡️ INVULNERABILITY CHECK
-	if $Player.is_invulnerable:
-		return
+	if $Player.is_invulnerable: return
 	
 	lives -= 1
 	$Hud/LivesLabel.text = "X " + str(lives)
 	get_tree().paused = true
 	
 	if lives <= 0:
-		# 🐛 THE FIX: Always guarantee time goes back to normal when Game Over hits!
 		Engine.time_scale = 1.0 
+		
+		# 🎵 Stop all music and play Game Over sound
+		if has_node("MainBGM"): $MainBGM.stop()
+		if has_node("BossBGM"): $BossBGM.stop()
+		if has_node("GameOverSound"): $GameOverSound.play()
 		
 		$GameOver.show_game_over(ScoreManager.score, wave - 1)
 		$GameOver.show()
 	else:
+		# 🎵 Play Damage Sound when taking a hit
+		if $Player.has_node("DamageSound"):
+			$Player.get_node("DamageSound").play()
+			
 		$WaveOverTimer.start()
 		
 func get_enemy_stats():

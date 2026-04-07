@@ -22,10 +22,25 @@ var is_starting_game := false
 var original_title_pos: Vector2
 var original_title_scale: Vector2
 
+# 🔊 SOUND VARIABLE
+var click_sound_player: AudioStreamPlayer
+
 func _ready() -> void:
 	if popup_rect: popup_rect.visible = false
 	
-	# 1. SETUP THE EPIC TITLE ENTRANCE (If Title exists)
+	# --- 🔊 1. SETUP CLICK SOUND DYNAMICALLY ---
+	click_sound_player = AudioStreamPlayer.new()
+	click_sound_player.stream = load("res://ADDED/A_MUSIC/click.wav")
+	add_child(click_sound_player)
+	
+	# Automatically attach the click sound to every button!
+	var all_buttons = [start_btn, quit_btn, lead_btn, inst_btn, close_btn]
+	for btn in all_buttons:
+		if btn:
+			btn.pressed.connect(play_click_sound)
+	# ------------------------------------------
+
+	# 2. SETUP THE EPIC TITLE ENTRANCE (If Title exists)
 	if title:
 		original_title_pos = title.position
 		original_title_scale = title.scale
@@ -37,7 +52,7 @@ func _ready() -> void:
 	for btn in [start_btn, quit_btn, lead_btn, inst_btn]:
 		if btn: btn.modulate.a = 0.0
 	
-	# 2. START THE CALM SCENE
+	# 3. START THE CALM SCENE
 	if door: door.play("default") 
 	
 	var intro_tween = create_tween().set_parallel(true)
@@ -56,7 +71,7 @@ func _ready() -> void:
 			fade_tween.tween_property(btn, "modulate:a", 1.0, 0.5).set_delay(delay)
 			delay += 0.2
 	
-	# 3. ☁️ START CLOUD SPAWNER (If Cloud exists)
+	# 4. ☁️ START CLOUD SPAWNER (If Cloud exists)
 	if cloud_template:
 		var cloud_timer = Timer.new()
 		cloud_timer.wait_time = 2.5
@@ -65,7 +80,7 @@ func _ready() -> void:
 		add_child(cloud_timer)
 		for i in range(4): spawn_cloud(true)
 	
-	# 4. CONNECT BUTTONS safely
+	# 5. CONNECT BUTTONS safely
 	if start_btn: start_btn.pressed.connect(_on_start_button_pressed)
 	if quit_btn: quit_btn.pressed.connect(_on_quit_button_pressed)
 	if inst_btn: inst_btn.pressed.connect(func(): open_popup("INSTRUCTIONS", "WASD / Arrows to Move\nMouse to Aim & Shoot\nSpace to Dodge\n\nSurvive the waves and defeat the bosses!"))
@@ -74,6 +89,10 @@ func _ready() -> void:
 	if lead_btn: lead_btn.pressed.connect(func(): open_popup("LEADERBOARDS", get_top_3_leaderboard_text()))
 	if close_btn: close_btn.pressed.connect(close_popup)
 
+# --- 🔊 PLAY SOUND FUNCTION ---
+func play_click_sound():
+	if click_sound_player:
+		click_sound_player.play()
 
 # --- ✨ ANIMATIONS ---
 func start_title_pulse():
@@ -173,4 +192,6 @@ func _on_start_button_pressed() -> void:
 	flash_tween.tween_callback(func(): get_tree().change_scene_to_file("res://scenes/main.tscn"))
 
 func _on_quit_button_pressed() -> void:
+	# A tiny 0.1s wait so the click sound has time to actually play before the app closes!
+	await get_tree().create_timer(0.1).timeout 
 	get_tree().quit()

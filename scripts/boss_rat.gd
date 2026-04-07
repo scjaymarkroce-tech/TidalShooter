@@ -94,6 +94,12 @@ func show_warning_sequence():
 	warning_layer.queue_free()
 	
 	get_tree().paused = false
+	
+	# 🎵 PLAY THE BOSS MUSIC NOW THAT THE WARNING IS DONE!
+	if main.has_node("BossBGM"):
+		main.get_node("BossBGM").play()
+		
+		
 	start_actual_boss_fight()
 
 func start_actual_boss_fight():
@@ -365,6 +371,9 @@ func enter_phase_2() -> void:
 	
 	speed += 20
 	dash_speed += 300 
+	
+	if main.has_node("BossBGM"):
+		main.get_node("BossBGM").pitch_scale = 1.35 # Adjust this number to make it faster/slowerw
 	
 	await get_tree().create_timer(1.0, true, false, true).timeout
 	$Area2D.set_deferred("monitoring", true)

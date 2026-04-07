@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b6vqi7cp8kkyu" path="res://ADDED/container.png" id="7_jk1qb"]
 [ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="7_oa1go"]
 [ext_resource type="Texture2D" uid="uid://nrjcngyfwa4d" path="res://ADDED/clouds.png" id="7_tbmy8"]
-[ext_resource type="AudioStream" uid="uid://drco6ecqyuxtm" path="res://ADDED/A MUSIC/topdownmenubgm.mp3" id="9_jk1qb"]
+[ext_resource type="AudioStream" uid="uid://drco6ecqyuxtm" path="res://ADDED/A_MUSIC/topdownmenubgm.mp3" id="9_jk1qb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5dd4i"]
 atlas = ExtResource("6_flqon")
@@ -299,7 +299,7 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dd4i"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -319,7 +319,7 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lgwnu"]
-bg_color = Color(0.0775836, 0.302486, 1.44392e-07, 1)
+bg_color = Color(0.372547, 0.199071, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -339,12 +339,12 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gw5y6"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.781951, 0.781912, 0.154097, 1)
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -464,7 +464,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_svtp6")
 text = "QUIT"
 
 [node name="PopupRect" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
