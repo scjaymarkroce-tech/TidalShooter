@@ -286,10 +286,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_24xck"]
-size = Vector2(13.5, 16)
+size = Vector2(111.708, 113.649)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t3q"]
-size = Vector2(13.75, 16)
+size = Vector2(733.333, 658.322)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd2k2"]
 bg_color = Color(0.0475577, 0.0475576, 0.0475576, 0.419608)
@@ -305,14 +305,17 @@ collision_layer = 4
 script = ExtResource("1_4kh6e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.179246, 0.0624097, 1)
 position = Vector2(0.2, 0.0350008)
-scale = Vector2(0.135, 0.153537)
+scale = Vector2(0.15, 0.171)
 sprite_frames = SubResource("SpriteFrames_2q0rr")
 animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+visible = false
+position = Vector2(-0.5, 3.25)
+scale = Vector2(0.15, 0.171)
 shape = SubResource("RectangleShape2D_24xck")
 
 [node name="EntranceTimer" type="Timer" parent="."]
@@ -320,11 +323,13 @@ wait_time = 1.25
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.15, 0.171)
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0.125, 3)
+position = Vector2(-3.33334, 18.2749)
+scale = Vector2(0.15, 0.171)
 shape = SubResource("RectangleShape2D_g2t3q")
 
 [node name="DashTimer" type="Timer" parent="."]

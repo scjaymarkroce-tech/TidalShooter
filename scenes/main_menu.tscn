@@ -1,41 +1,40 @@
-[gd_scene load_steps=30 format=3 uid="uid://c17pkimncu6h7"]
+[gd_scene load_steps=31 format=3 uid="uid://c17pkimncu6h7"]
 
 [ext_resource type="Script" uid="uid://dul10smti6jqg" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://dpa600rittfrv" path="res://ADDED/Gemini_Generated_Image_v1m4rmv1m4rmv1m4.png" id="2_8ln24"]
-[ext_resource type="Texture2D" uid="uid://bkw0tyuw13wbq" path="res://ADDED/door.png" id="3_bqqt6"]
-[ext_resource type="Texture2D" uid="uid://cyerytjxolo5" path="res://ADDED/main menu path.png" id="3_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://dkb6og6ysqcsx" path="res://ADDED/Gemini_Generated_Image_8my3698my3698my3.png" id="2_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://3n2tmdt6o6pv" path="res://ADDED/path2.png" id="3_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://dg027jvkgksqu" path="res://ADDED/craiyon_132026_image.png" id="5_8ln24"]
+[ext_resource type="Texture2D" uid="uid://cmuwatnu2j8r6" path="res://ADDED/Gemini_Generated_Image_gv9s14gv9s14gv9s-Photoroom.png" id="6_flqon"]
 [ext_resource type="Texture2D" uid="uid://b6vqi7cp8kkyu" path="res://ADDED/container.png" id="7_jk1qb"]
 [ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="7_oa1go"]
 [ext_resource type="Texture2D" uid="uid://nrjcngyfwa4d" path="res://ADDED/clouds.png" id="7_tbmy8"]
-[ext_resource type="StyleBox" uid="uid://bhfk08wusjcv5" path="res://assets/hover.tres" id="8_5dd4i"]
-[ext_resource type="StyleBox" uid="uid://bft6jfbl2nka1" path="res://assets/pressed.tres" id="9_lgwnu"]
+[ext_resource type="AudioStream" uid="uid://drco6ecqyuxtm" path="res://ADDED/A MUSIC/topdownmenubgm.mp3" id="9_jk1qb"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wu84c"]
-atlas = ExtResource("3_bqqt6")
-region = Rect2(59, 0, 298, 697)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dd4i"]
+atlas = ExtResource("6_flqon")
+region = Rect2(40, 50, 310, 647)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bqqt6"]
-atlas = ExtResource("3_bqqt6")
-region = Rect2(59, 0, 298, 697)
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcqid"]
+atlas = ExtResource("6_flqon")
+region = Rect2(40, 50, 310, 647)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
-atlas = ExtResource("3_bqqt6")
-region = Rect2(357, 0, 298, 697)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ajci"]
+atlas = ExtResource("6_flqon")
+region = Rect2(350, 50, 310, 647)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rtw2f"]
-atlas = ExtResource("3_bqqt6")
-region = Rect2(655, 0, 298, 697)
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b55j"]
+atlas = ExtResource("6_flqon")
+region = Rect2(660, 50, 310, 647)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oa1go"]
-atlas = ExtResource("3_bqqt6")
-region = Rect2(953, 0, 298, 697)
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgwnu"]
+atlas = ExtResource("6_flqon")
+region = Rect2(948, 50, 313, 647)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8ln24"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wu84c")
+"texture": SubResource("AtlasTexture_5dd4i")
 }],
 "loop": true,
 "name": &"default",
@@ -43,16 +42,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bqqt6")
+"texture": SubResource("AtlasTexture_rcqid")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8ln24")
+"texture": SubResource("AtlasTexture_1ajci")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rtw2f")
+"texture": SubResource("AtlasTexture_7b55j")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oa1go")
+"texture": SubResource("AtlasTexture_lgwnu")
 }],
 "loop": false,
 "name": &"open",
@@ -60,7 +59,27 @@ animations = [{
 }]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbmy8"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk1qb"]
+bg_color = Color(0.372547, 0.199071, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -80,7 +99,27 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flqon"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -99,28 +138,8 @@ shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
 shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
-bg_color = Color(0.0775836, 0.302486, 1.44392e-07, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.781951, 0.781912, 0.154097, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-corner_detail = 10
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
-shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
-shadow_size = 7
-shadow_offset = Vector2(7, 7)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ajci"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.372547, 0.199071, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -140,7 +159,27 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7b55j"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5pajh"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -159,28 +198,8 @@ shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
 shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5pajh"]
-bg_color = Color(0.0775836, 0.302486, 1.44392e-07, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.781951, 0.781912, 0.154097, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-corner_detail = 10
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
-shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
-shadow_size = 7
-shadow_offset = Vector2(7, 7)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7ex8"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.372547, 0.199071, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -200,7 +219,27 @@ shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8gd2"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hstxw"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -219,8 +258,8 @@ shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
 shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hstxw"]
-bg_color = Color(0.0775836, 0.302486, 1.44392e-07, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8egab"]
+bg_color = Color(0.372547, 0.199071, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -239,13 +278,13 @@ shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
 shadow_size = 7
 shadow_offset = Vector2(7, 7)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8egab"]
-bg_color = Color(0.203922, 0.643137, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svtp6"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.781951, 0.781912, 0.154097, 1)
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -329,18 +368,29 @@ grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
 [node name="bg" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
 texture_repeat = 2
-position = Vector2(1.99999, 4)
-scale = Vector2(0.876894, 1.55208)
-texture = ExtResource("2_8ln24")
+position = Vector2(20, 482)
+scale = Vector2(1.51108, 1.76347)
+texture = ExtResource("2_lgwnu")
 centered = false
 region_enabled = true
 region_rect = Rect2(-0.0154419, 3.92305, 1579.83, 668.8)
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1397.0
+offset_bottom = 823.0
+texture = ExtResource("2_lgwnu")
+expand_mode = 1
+
 [node name="path" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
 position = Vector2(86, 227)
 scale = Vector2(0.946875, 1.83241)
-texture = ExtResource("3_rtw2f")
+texture = ExtResource("3_5dd4i")
 centered = false
 
 [node name="CloudTemplate" type="Sprite2D" parent="."]
@@ -349,16 +399,16 @@ scale = Vector2(0.548828, 0.494475)
 texture = ExtResource("7_tbmy8")
 
 [node name="Door" type="AnimatedSprite2D" parent="."]
-position = Vector2(696, 378)
-scale = Vector2(0.4, 0.4)
+position = Vector2(714.5, 313)
+scale = Vector2(0.929712, 1.017)
 sprite_frames = SubResource("SpriteFrames_8ln24")
 animation = &"open"
 frame = 3
 frame_progress = 1.0
 
 [node name="Title" type="Sprite2D" parent="."]
-position = Vector2(691, 193)
-scale = Vector2(0.468841, 0.459441)
+position = Vector2(698, 301)
+scale = Vector2(0.735689, 0.652094)
 texture = ExtResource("5_8ln24")
 
 [node name="StartButton" type="Button" parent="."]
@@ -369,9 +419,9 @@ offset_right = 1266.0
 offset_bottom = 692.0
 theme_override_fonts/font = ExtResource("7_oa1go")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/hover = ExtResource("8_5dd4i")
-theme_override_styles/pressed = ExtResource("9_lgwnu")
-theme_override_styles/normal = SubResource("StyleBoxFlat_tbmy8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tbmy8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jk1qb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_flqon")
 text = "START"
 
 [node name="LeaderboardButton" type="Button" parent="."]
@@ -382,9 +432,9 @@ offset_right = 1262.0
 offset_bottom = 557.0
 theme_override_fonts/font = ExtResource("7_oa1go")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/normal = SubResource("StyleBoxFlat_1ajci")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rcqid")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1ajci")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7b55j")
 text = "Leaderboards"
 
 [node name="InstructionsButton" type="Button" parent="."]
@@ -395,9 +445,9 @@ offset_right = 421.0
 offset_bottom = 550.0
 theme_override_fonts/font = ExtResource("7_oa1go")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_7b55j")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5pajh")
-theme_override_styles/normal = SubResource("StyleBoxFlat_j7ex8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5pajh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_j7ex8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_a8gd2")
 text = "Instructions"
 
 [node name="QuitButton" type="Button" parent="."]
@@ -408,12 +458,13 @@ offset_right = 423.0
 offset_bottom = 684.0
 theme_override_fonts/font = ExtResource("7_oa1go")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/hover = SubResource("StyleBoxFlat_a8gd2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hstxw")
-theme_override_styles/normal = SubResource("StyleBoxFlat_8egab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hstxw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8egab")
+theme_override_styles/normal = SubResource("StyleBoxFlat_svtp6")
 text = "QUIT"
 
 [node name="PopupRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -479,3 +530,9 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_5dd4i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_lgwnu")
 theme_override_styles/normal = SubResource("StyleBoxFlat_gw5y6")
 text = "Close"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_jk1qb")
+volume_db = -10.0
+autoplay = true
+parameters/looping = true

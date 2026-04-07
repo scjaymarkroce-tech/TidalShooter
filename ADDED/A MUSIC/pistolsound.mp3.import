@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dif22y23by2kt"
+path="res://.godot/imported/pistolsound.mp3-59da6c550b73f5f3072bc45c11bd6f04.mp3str"
+
+[deps]
+
+source_file="res://ADDED/A MUSIC/pistolsound.mp3"
+dest_files=["res://.godot/imported/pistolsound.mp3-59da6c550b73f5f3072bc45c11bd6f04.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

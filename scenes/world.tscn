@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bnd0t5lx6osx3" path="res://assets/Grass.png" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://cdu6w8cqdo7o3" path="res://ADDED/path.png" id="2_rwgxs"]
-[ext_resource type="Texture2D" uid="uid://1hmh4ljf3ky" path="res://ADDED/bg3.png" id="3_4wyf3"]
-[ext_resource type="Texture2D" uid="uid://bb0hdy18vkup6" path="res://ADDED/bg2.png" id="3_k0juu"]
+[ext_resource type="Texture2D" uid="uid://bxo8n6lsyxg1n" path="res://ADDED/AA/Gemini_Generated_Image_cfh1oncfh1oncfh1.png" id="3_k0juu"]
+[ext_resource type="Texture2D" uid="uid://wkdtumac1kbk" path="res://ADDED/AA/Gemini_Generated_Image_svpnzqsvpnzqsvpn.png" id="4_k0juu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwgxs"]
 texture = ExtResource("1_nnsk1")
@@ -46,15 +46,16 @@ expand_mode = 1
 
 [node name="bg2" type="TextureRect" parent="."]
 offset_left = -6.0
-offset_top = -22.0
-offset_right = 463.0
-offset_bottom = 259.0
+offset_top = -20.0
+offset_right = 465.0
+offset_bottom = 260.0
 texture = ExtResource("3_k0juu")
 expand_mode = 1
 
 [node name="bg3" type="TextureRect" parent="."]
-offset_top = -15.0
+offset_left = -6.0
+offset_top = -21.0
 offset_right = 463.0
-offset_bottom = 259.0
-texture = ExtResource("3_4wyf3")
+offset_bottom = 263.0
+texture = ExtResource("4_k0juu")
 expand_mode = 1

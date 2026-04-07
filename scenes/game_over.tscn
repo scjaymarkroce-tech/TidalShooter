@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://81yslult5viv"]
+[gd_scene load_steps=8 format=3 uid="uid://81yslult5viv"]
 
 [ext_resource type="Script" uid="uid://be1e240rfgswn" path="res://scripts/game_over.gd" id="1_wqhvx"]
 [ext_resource type="FontFile" uid="uid://1k5tlnvmn87e" path="res://ADDED/subatomic.tsoonami.ttf" id="2_tbwuq"]
+[ext_resource type="AudioStream" uid="uid://drco6ecqyuxtm" path="res://ADDED/A MUSIC/topdownmenubgm.mp3" id="3_tbwuq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0nqlu"]
-bg_color = Color(0.199337, 0.470516, 0.328965, 0.537255)
+bg_color = Color(0.120358, 0.309931, 0.21119, 0.537255)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -219,3 +220,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xeevv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wqhvx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tbwuq")
 text = "SUBMIT"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tbwuq")
+volume_db = -10.0

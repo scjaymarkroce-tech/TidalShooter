@@ -116,7 +116,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_24xck"]
-size = Vector2(8.75, 9.75)
+size = Vector2(12, 9.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t3q"]
 size = Vector2(8.75, 9.75)
@@ -127,14 +127,14 @@ collision_layer = 4
 script = ExtResource("1_xakyd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.08, 0.08)
+scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_2q0rr")
-animation = &"dead"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 1.0
+frame_progress = 0.839954
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0.5, 2.25)
 shape = SubResource("RectangleShape2D_24xck")
 
 [node name="EntranceTimer" type="Timer" parent="."]
@@ -146,6 +146,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_g2t3q")
 

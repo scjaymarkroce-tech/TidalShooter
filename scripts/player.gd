@@ -50,7 +50,7 @@ var max_ammo := {
 # Reload times
 var reload_time := {
 	1: 3.0,
-	2: 7.0,
+	2: 4.0,
 	3: 7.0,
 	4: 0.0  # Flamethrower does NOT use reload
 }

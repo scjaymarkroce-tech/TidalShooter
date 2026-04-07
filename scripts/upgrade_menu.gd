@@ -84,7 +84,7 @@ func open_menu():
 	is_animating = false
 
 
-# --- 🖱️ DYNAMIC HOVER EFFECTS (NUDGE UP & GLOW) ---
+# --- 🖱️ DYNAMIC HOVER EFFECTS (NUDGE UP & SOFT GLOW) ---
 func _on_card_hover(idx: int, is_hovering: bool):
 	if is_animating: return 
 	
@@ -92,12 +92,12 @@ func _on_card_hover(idx: int, is_hovering: bool):
 	var tween = create_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
 	if is_hovering:
-		# Float up slightly (-15 pixels) and glow bright
+		# Float up slightly (-15 pixels) and add a very gentle brightness (1.1 instead of 1.3)
 		tween.tween_property(card["panel"], "position:y", card["base_p_pos"].y - 15, 0.15).set_trans(Tween.TRANS_SINE)
-		tween.tween_property(card["panel"], "modulate", Color(1.3, 1.3, 1.3, 1.0), 0.15)
+		tween.tween_property(card["panel"], "modulate", Color(1.1, 1.1, 1.1, 1.0), 0.15)
 		
 		tween.tween_property(card["button"], "position:y", card["base_b_pos"].y - 15, 0.15).set_trans(Tween.TRANS_SINE)
-		tween.tween_property(card["button"], "modulate", Color(1.3, 1.3, 1.3, 1.0), 0.15)
+		tween.tween_property(card["button"], "modulate", Color(1.1, 1.1, 1.1, 1.0), 0.15)
 	else:
 		# Return to normal editor position and color
 		tween.tween_property(card["panel"], "position:y", card["base_p_pos"].y, 0.15).set_trans(Tween.TRANS_SINE)
@@ -124,12 +124,13 @@ func _finish_upgrade(idx: int):
 		if not card["panel"].visible: continue
 		
 		if i == idx:
-			# ✨ THE CHOSEN ONE: Glows pure white and floats up high
+			# ✨ THE CHOSEN ONE: Floats up high and gets a premium soft golden/warm tint
 			tween.parallel().tween_property(card["panel"], "position:y", card["base_p_pos"].y - 40, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tween.parallel().tween_property(card["panel"], "modulate", Color(3.0, 3.0, 3.0, 1.0), 0.3) 
+			# Replaced 3.0 with a soft, warm brightening (1.2 red, 1.15 green, 0.95 blue)
+			tween.parallel().tween_property(card["panel"], "modulate", Color(1.2, 1.15, 0.95, 1.0), 0.3) 
 			
 			tween.parallel().tween_property(card["button"], "position:y", card["base_b_pos"].y - 40, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tween.parallel().tween_property(card["button"], "modulate", Color(3.0, 3.0, 3.0, 1.0), 0.3) 
+			tween.parallel().tween_property(card["button"], "modulate", Color(1.2, 1.15, 0.95, 1.0), 0.3) 
 			
 		else:
 			# 🗑️ THE REJECTS: Fade away quickly into the dark

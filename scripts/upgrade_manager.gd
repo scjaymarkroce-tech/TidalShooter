@@ -19,10 +19,10 @@ var PISTOL_SCALING = {
 }
 
 var SHOTGUN_SCALING = {
-	1: {"damage": 15, "mag": 10, "reload": 7.0},
-	2: {"damage": 21, "mag": 15, "reload": 6.0},
-	3: {"damage": 27, "mag": 20, "reload": 5.0},
-	4: {"damage": 35, "mag": 25, "reload": 4.0},
+	1: {"damage": 15, "mag": 10, "reload": 4.0},
+	2: {"damage": 21, "mag": 15, "reload": 3.5},
+	3: {"damage": 27, "mag": 20, "reload": 3.0},
+	4: {"damage": 35, "mag": 25, "reload": 2.75},
 	5: {"damage": 0, "mag": 0, "reload": 0}  # Will be calculated as prev*1.2
 }
 

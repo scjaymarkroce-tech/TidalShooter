@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbg6ftndwf05a"]
+[gd_scene load_steps=21 format=3 uid="uid://cbg6ftndwf05a"]
 
 [ext_resource type="Script" uid="uid://rmj5eeqoqrat" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b0nxpo1wjd4fb" path="res://scenes/world.tscn" id="1_o5qli"]
@@ -9,6 +9,131 @@
 [ext_resource type="PackedScene" uid="uid://rv3yckew4h5o" path="res://scenes/hud.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://81yslult5viv" path="res://scenes/game_over.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://uc45x8ukmjq2" path="res://scenes/upgrade_menu.tscn" id="9_85g3d"]
+[ext_resource type="Texture2D" uid="uid://b6vqi7cp8kkyu" path="res://ADDED/container.png" id="10_choun"]
+[ext_resource type="Script" uid="uid://c3cq1n17slnfy" path="res://scripts/pause_menu.gd" id="10_ya4ey"]
+[ext_resource type="StyleBox" uid="uid://3nfmvdtfm5qk" path="res://assets/1hover.tres" id="12_a8y0u"]
+[ext_resource type="StyleBox" uid="uid://bu7ehgprh0vcq" path="res://assets/1pressed.tres" id="13_jkv2x"]
+[ext_resource type="StyleBox" uid="uid://bmk27pi57e265" path="res://assets/nnormal.tres" id="14_jbj1t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp3eg"]
+bg_color = Color(0.372547, 0.199071, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.781951, 0.781912, 0.154097, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y0u"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkv2x"]
+bg_color = Color(0.372547, 0.199071, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.781951, 0.781912, 0.154097, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jscy8"]
+bg_color = Color(0.756863, 0.427451, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.780392, 0.678431, 0.152941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 10
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(2.82768e-07, 0.273376, 5.77569e-07, 0.6)
+shadow_size = 7
+shadow_offset = Vector2(7, 7)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_jyhfs")
@@ -40,7 +165,66 @@ process_mode = 2
 offset_top = 21.0
 offset_bottom = 21.0
 
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 90
+script = ExtResource("10_ya4ey")
+
+[node name="TextureRect" type="TextureRect" parent="PauseMenu"]
+anchors_preset = -1
+anchor_left = 0.258
+anchor_top = 0.243
+anchor_right = 0.737
+anchor_bottom = 0.756
+offset_left = -95.136
+offset_top = -53.288
+offset_right = 74.0959
+offset_bottom = 26.1039
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_choun")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -84.0
+offset_right = 91.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/hover = ExtResource("12_a8y0u")
+theme_override_styles/pressed = ExtResource("13_jkv2x")
+theme_override_styles/normal = ExtResource("14_jbj1t")
+text = "CONTINUE"
+
+[node name="RestartWaveButton" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_muem4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dp3eg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0ld40")
+text = "RESTART"
+
+[node name="QuitButton" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jkv2x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jscy8")
+text = "QUIT"
+
 [connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
 [connection signal="timeout" from="WaveOverTimer" to="." method="_on_wave_over_timer_timeout"]
 [connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ContinueButton" to="PauseMenu" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/RestartWaveButton" to="PauseMenu" method="_on_restart_wave_button_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]
